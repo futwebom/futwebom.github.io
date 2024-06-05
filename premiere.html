@@ -57,14 +57,17 @@
 <body>
 <div id="player"></div>
 <script>
-fetch('https://futwebom.github.io/docs2.html')
-            .then(response => response.text())
-            .then(html => {
-                // Parse o HTML e extrair o URL do vídeo
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                const videoUrl = doc.querySelector('SELETOR_DO_VIDEO').getAttribute('src');
-                 { link, licenses } = data[0];
+try {
+    document.domain = document.domain;
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const apiUrl = `https://futwebom.github.io/docs2.html`;
+
+    if (channelId) {
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                const { link, licenses } = data[0];
 
                 var playerInstance = jwplayer("player");
                 playerInstance.setup({
