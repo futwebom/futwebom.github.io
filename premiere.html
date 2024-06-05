@@ -8,14 +8,16 @@
     <div id="output"></div>
 
     <script>
-        function extractElement() {
-            const element = document.querySelector('body > iframe:nth-child(2)');
+        function extractElementByXPath(xpath) {
+            const result = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+            const element = result.singleNodeValue;
             return element ? element.outerHTML : 'Elemento não encontrado';
         }
 
-        const elementHTML = extractElement();
+        const xpath = '/html/body/iframe[1]';
+        const elementHTML = extractElementByXPath(xpath);
         const outputDiv = document.getElementById('output');
-        outputDiv.innerHTML = '<h2>Elemento Selecionado:</h2>';
+        outputDiv.innerHTML = '<h2>Elemento Selecionado por XPath:</h2>';
         outputDiv.innerHTML += `<pre>${elementHTML}</pre>`;
     </script>
 </head>
