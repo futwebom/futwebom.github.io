@@ -5,7 +5,7 @@ window.onload = function() {
             // Extrai o conteúdo da página usando um elemento temporário
             var tempElement = document.createElement('div');
             tempElement.innerHTML = data;
-            var contentToExtract = tempElement.querySelector('/html/body/iframe[1]');
+            var contentToExtract = tempElement.querySelector('.content');
 
             // Exibe o conteúdo extraído na página
             var contentContainer = document.getElementById('content');
