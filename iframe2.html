@@ -1,28 +1,24 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Exemplo de extração de conteúdo de iframe</title>
+<title>Extrair Estilo do iFrame</title>
 <script>
+function extrairEstilo() {
+  var iframe = document.getElementById("meuIframe");
+  var estilo = window.getComputedStyle(iframe);
+  console.log(estilo);
+}
+
 window.onload = function() {
-    // Seleciona o iframe
-    var iframe = document.getElementById('meuIframe');
-    
-    // Verifica se o iframe foi carregado
-    iframe.onload = function() {
-        // Extrai o conteúdo do iframe
-        var conteudo = iframe.contentDocument.body.innerHTML;
-        console.log(conteudo); // Exibe o conteúdo no console (pode ser alterado conforme necessário)
-    };
+  extrairEstilo();
 };
 </script>
 </head>
 <body>
 
-<h1>Conteúdo do iframe:</h1>
-
-<iframe id="meuIframe" src="https://reidoscanais.app/embed/player.php?l=aHR0cHM6Ly94bi0tLS1pdGJhdmJ2YWNlaXoueG4tLS0tLS0tNDNkYmFiYmNxdnNhYzhhZmJmZHdjb2Vja3ZrbmdkMWZybGd1aGFqOWIubmV0L3d0Yy5waHA/aWQ9MTU3Nw==" width="800" height="600" frameborder="0"></iframe>
+<iframe id="meuIframe" src="https://reidoscanais.app/embed/player.php?l=aHR0cHM6Ly94bi0tLS1pdGJhdmJ2YWNlaXoueG4tLS0tLS0tNDNkYmFiYmNxdnNhYzhhZmJmZHdjb2Vja3ZrbmdkMWZybGd1aGFqOWIubmV0L3d0Yy5waHA/aWQ9MTU3Nw=="></iframe>
 
 </body>
 </html>
