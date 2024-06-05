@@ -1,52 +1,13 @@
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Player</title>
+    <title>UFC | JWPlayer</title>
     <meta content='width=device-width, initial-scale=1' name='viewport'>
     <meta http-equiv="Content-Language" content="pt-br" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/reidoscanais/rdc@main/assets/css/player-v3.1.min.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/reidoscanais/rdc@main/assets/css/hotstar.css">
     <script src="//cdn.jsdelivr.net/gh/reidoscanais/rdc@main/assets/jwplayer/jwplayer.latest.js"></script>
-   <!-- DNS-prefetch -->
-<link rel="dns-prefetch" href="https://acscdn.com/script/ut.js?cb=1717600117940">
-<link rel="dns-prefetch" href="https://acscdn.com/script/ut.js?cb=">
-<link rel="dns-prefetch" href="https://youradexchange.com/script/suurl5.php?r=8323794&chu=%22Chromium%22%3Bv%3D124%2C%20%22Android%20WebView%22%3Bv%3D124%2C%20%22Not-A.Brand%22%3Bv%3D99&chmob=%3F1&chp=Android&cbur=0.16167047302290927&cbiframe=0&cbWidth=980&cbHeight=1871&cbtitle=Player&cbpage=https%3A%2F%2Freidoscanais.app%2Fembed%2Fplayer.php%3Fl%3DaHR0cHM6Ly94bi0tLS1pdGJhdmJ2YWNlaXoueG4tLS0tLS0tNDNkYmFiYmNxdnNhYzhhZmJmZHdjb2Vja3ZrbmdkMWZybGd1aGFqOWIubmV0L3d0Yy5waHA%2FaWQ9MTU3Nw%3D%3D&cbref=&cbdescription=&cbkeywords=&cbcdn=acscdn.com&uf">
-<link rel="dns-prefetch" href="https://youradexchange.com/script/suurl5.php?r=">
-</head>
-<body>
-    <style>
-  #iframe-container {
-    width: 100%;
-    height: 500px;
-    overflow: auto; /* Adicionado para rolagem caso o conteúdo do iframe seja maior que o contêiner */
-  }
-</style>
-    <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var allowedDomains = ['futwebom.github.io'];
-        var referrer = document.referrer;
-        var isIframe = false;
-
-        try {
-            isIframe = window.self !== window.top;
-        } catch (e) {
-            isIframe = true;
-        }
-
-        var currentDomain = window.location.hostname;
-
-        if (!isIframe) {
-            
-        } else if (referrer) {
-            var referrerDomain = new URL(referrer).hostname;
-            if (!allowedDomains.includes(referrerDomain)) {
-                
-            }
-        } else if (!allowedDomains.includes(currentDomain)) {
-            
-        }
-    });
-</script>    
     <script src="https://cdn.jsdelivr.net/npm/console-ban@4.1.0/dist/console-ban.min.js"></script>
     <script>
         // default options
@@ -55,7 +16,7 @@
         ConsoleBan.init({
           redirect: 'https://www.google.com'
         })
-      </script>  
+    </script>  
     <script>
         jwplayer.key = 'ITWMv7t88JGzI0xPwW8I0+LveiXX9SWbfdmt0ArUSyc=';
     </script>
@@ -67,68 +28,58 @@
 try {
     document.domain = document.domain;
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const channelId = urlParams.get('id');
-    const apiUrl = `https://xn----itbavbvaceiz.xn-------43dbabbcqvsac8afbfdwcoeckvkngd1frlguhaj9b.net/wtc.php?id=${channelId}`;
+    const iframe = document.getElementById('yourIframeId');
+    const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+    const apiUrl = `https://futwebom.github.io/docs2.html`;
 
-    if (channelId) {
-        fetch(apiUrl)
-            .then(response => response.json())
-            .then(data => {
-                const { link, licenses } = data[0];
+    if (iframeDocument) {
+        const channelId = iframeDocument.getElementById('id').textContent.trim();
+        if (channelId) {
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const { link, licenses } = data[0];
 
-                var playerInstance = jwplayer("player");
-                playerInstance.setup({
-                    playlist: [{
-                        title: "",
-                        sources: [{
-                            default: false,
-                            type: "dash",
-                            file: link,
-                            drm: {
-                                widevine: {
-                                    url: licenses.find(l => l.scheme === 'drm.WIDEVINE_CENC').licenseURL,
+                    var playerInstance = jwplayer("player");
+                    playerInstance.setup({
+                        playlist: [{
+                            title: "",
+                            sources: [{
+                                default: false,
+                                type: "dash",
+                                file: link,
+                                drm: {
+                                    widevine: {
+                                        url: licenses.find(l => l.scheme === 'drm.WIDEVINE_CENC').licenseURL,
+                                    },
+                                    playready: {
+                                        url: licenses.find(l => l.scheme === 'drm.PLAYREADY_CENC').licenseURL,
+                                    }
                                 },
-                                playready: {
-                                    url: licenses.find(l => l.scheme === 'drm.PLAYREADY_CENC').licenseURL,
-                                }
-                            },
-                            label: "0"
-                        }]
-                    }],
-                    width: "100%",
-                    height: "100%",
-                    cast: {},
-                    autostart: false,
-                    logo: {
-                        file: '',
-                        link: '',
-                        position: 'top-right'
-                    },
-                    sharing: {}
+                                label: "0"
+                            }]
+                        }],
+                        width: "100%",
+                        height: "100%",
+                        cast: {},
+                        autostart: false,
+                        logo: {
+                            file: '',
+                            link: '',
+                            position: 'top-right'
+                        },
+                        sharing: {}
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
                 });
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });
+        } else {
+            console.error('ID do canal não encontrado no iframe');
+        }
     } else {
-        console.error('ID do canal não fornecido na URL');
+        console.error('Iframe não encontrado');
     }
-</script>
-    
-<div id="iframe-container">
-  <iframe id="myIframe" src="https://reidoscanais.app/embed/player.php?l=aHR0cHM6Ly94bi0tLS1pdGJhdmJ2YWNlaXoueG4tLS0tLS0tNDNkYmFiYmNxdnNhYzhhZmJmZHdjb2Vja3ZrbmdkMWZybGd1aGFqOWIubmV0L3d0Yy5waHA/aWQ9MTU3Nw=="></iframe>
-
-</div>
-
-<script>
-  window.onload = function() {
-    var iframe = document.getElementById('myIframe');
-    var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-    var iframeContent = iframeDocument.documentElement.innerHTML;
-
-    document.getElementById('iframe-container').innerHTML = iframeContent;
-  };
 </script>
 </body>
 </html>
