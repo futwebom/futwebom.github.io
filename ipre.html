@@ -65,43 +65,27 @@
             });
         }
 
-        function carregarDadosDoPrimeiroIframe() {
-            var iframe = document.getElementById('iframe_player1');
-            var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-            var link = iframeDocument.querySelector('link').getAttribute('href');
-            var licenses = JSON.parse(iframeDocument.querySelector('script').textContent);
+        function carregarDadosDoIframe(iframeId) {
+            var iframe = document.getElementById(iframeId);
+            var link = iframe.src;
 
-            carregarDados(link, licenses);
-        }
-
-        function carregarDadosDoSegundoIframe() {
-            var iframe = document.getElementById('iframe_player2');
-            var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-            var link = iframeDocument.querySelector('link').getAttribute('href');
-            var licenses = JSON.parse(iframeDocument.querySelector('script').textContent);
-
-            carregarDados(link, licenses);
+            iframe.onload = function() {
+                var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+                var licenses = JSON.parse(iframeDocument.body.innerText);
+                carregarDados(link, licenses);
+            };
         }
 
         window.onload = function() {
-            carregarDadosDoPrimeiroIframe();
-            carregarDadosDoSegundoIframe();
+            carregarDadosDoIframe('iframe_player1');
         };
     </script>
 </head>
 
 <body>
-  <script type="text/javascript">
-    aclib.runPop({
-        zoneId: '8323794',
-    });
-</script>
     <div id="player"></div>
     <iframe id="iframe_player1"
         src="https://reidoscanais.app/embed/player.php?l=aHR0cHM6Ly94bi0tLS1pdGJhdmJ2YWNlaXoueG4tLS0tLS0tNDNkYmFiYmNxdnNhYzhhZmJmZHdjb2Vja3ZrbmdkMWZybGd1aGFqOWIubmV0L3d0Yy5waHA/aWQ9MTU3Nw=="
-        style="display: none;"></iframe>
-    <iframe id="iframe_player2"
-        src="https://xn----itbavbvaceiz.xn-------43dbabbcqvsac8afbfdwcoeckvkngd1frlguhaj9b.net/wtc.php?id=1577"
         style="display: none;"></iframe>
 </body>
 
