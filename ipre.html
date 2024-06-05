@@ -1,17 +1,56 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Extrair Conteúdo da Página</title>
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Extrair Conteúdo em JSON</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Conteúdo Extraído</h1>
-        <div id="content"></div>
-    </div>
+<button onclick="extractContent()">Extrair Conteúdo</button>
+<pre id="json-content"></pre>
 
-    <script src="script.js"></script>
+<script>
+function extractContent() {
+    fetch('https://futwebom.github.io/docs2.html')
+        .then(response => response.text())
+        .then(data => {
+            var tempElement = document.createElement('div');
+            tempElement.innerHTML = data;
+
+            var extractedContent = extractElementContent(tempElement);
+
+            var jsonContent = JSON.stringify(extractedContent, null, 2);
+            document.getElementById('json-content').textContent = jsonContent;
+        })
+        .catch(error => console.error('Erro ao extrair conteúdo:', error));
+}
+
+function extractElementContent(element) {
+    var content = {};
+
+    // Extrair o texto do elemento
+    content.text = element.innerText;
+
+    // Extrair atributos do elemento, se houver
+    if (element.attributes) {
+        content.attributes = {};
+        for (var i = 0; i < element.attributes.length; i++) {
+            var attr = element.attributes[i];
+            content.attributes[attr.name] = attr.value;
+        }
+    }
+
+    // Extrair conteúdo dos elementos filhos, se houver
+    if (element.children.length > 0) {
+        content.children = [];
+        for (var i = 0; i < element.children.length; i++) {
+            var childElement = element.children[i];
+            content.children.push(extractElementContent(childElement));
+        }
+    }
+
+    return content;
+}
+</script>
 </body>
 </html>
