@@ -17,44 +17,17 @@
   <iframe id="myIframe" src="https://reidoscanais.app/embed/player.php?l=aHR0cHM6Ly94bi0tLS1pdGJhdmJ2YWNlaXoueG4tLS0tLS0tNDNkYmFiYmNxdnNhYzhhZmJmZHdjb2Vja3ZrbmdkMWZybGd1aGFqOWIubmV0L3d0Yy5waHA/aWQ9MTU3Nw=="></iframe>
 </div>
 
+<button onclick="displayIframeCode()">Exibir Código do iFrame</button>
+
 <script>
-  window.onload = function() {
+  function displayIframeCode() {
     var iframe = document.getElementById('myIframe');
     var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
     var iframeContent = iframeDocument.documentElement.innerHTML;
 
-    document.getElementById('iframe-container').innerHTML = iframeContent;
-  };
+    // Exibe o código do iframe na div de saída.
+    document.getElementById('iframe-container').innerText = iframeContent;
+  }
 </script>
-    <div id="output"></div>
-    <button onclick="copyIFrameCode()">Copiar Código do iFrame</button>
-
-    <script>
-        function extractElementByXPath(xpath) {
-            const result = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
-            const element = result.singleNodeValue;
-            return element ? element.outerHTML : 'Elemento não encontrado';
-        }
-
-        function copyIFrameCode() {
-            const xpath = '/html/body/iframe[1]';
-            const elementHTML = extractElementByXPath(xpath);
-
-            // Cria um elemento textarea oculto e atribui o código do iframe a ele.
-            const textarea = document.createElement('textarea');
-            textarea.value = elementHTML;
-            document.body.appendChild(textarea);
-
-            // Seleciona e copia o conteúdo do textarea.
-            textarea.select();
-            document.execCommand('copy');
-
-            // Remove o textarea após a cópia.
-            document.body.removeChild(textarea);
-
-            // Exibe uma mensagem de confirmação.
-            alert('Código do iFrame copiado para a área de transferência!');
-        }
-    </script>
 </body>
 </html>
