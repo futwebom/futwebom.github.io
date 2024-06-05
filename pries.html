@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Exibir Código Fonte do iFrame</title>
+<title>Extrair Documento do Iframe</title>
 <style>
   #iframe-container {
     width: 100%;
@@ -18,19 +18,17 @@
 </div>
 
 <script>
-  // Função para exibir o código fonte do conteúdo do iframe
-  function displayIframeSource() {
+  window.onload = function() {
     var iframe = document.getElementById('myIframe');
     var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-    var iframeSource = new XMLSerializer().serializeToString(iframeDocument);
+    var iframeContent = iframeDocument.documentElement.innerHTML;
 
-    // Exibir o código fonte dentro de uma janela pop-up
+    document.getElementById('iframe-container').innerHTML = iframeContent;
+
+    // Abrir a visualização de código-fonte quando a página é carregada
     var sourceWindow = window.open();
-    sourceWindow.document.write('<pre>' + iframeSource + '</pre>');
-  }
-
-  // Chamando a função para exibir o código fonte do conteúdo do iframe automaticamente ao carregar a página
-  window.onload = displayIframeSource;
+    sourceWindow.document.write('<pre>' + iframeContent + '</pre>');
+  };
 </script>
 </body>
 </html>
