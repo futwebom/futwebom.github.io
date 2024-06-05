@@ -1,34 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Extrair Documento do Iframe</title>
-<style>
-  #iframe-container {
-    width: 100%;
-    height: 500px;
-    overflow: auto; /* Adicionado para rolagem caso o conteúdo do iframe seja maior que o contêiner */
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extrair Conteúdo da Página</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div id="iframe-container">
-  <iframe id="myIframe" src="https://reidoscanais.app/embed/player.php?l=aHR0cHM6Ly94bi0tLS1pdGJhdmJ2YWNlaXoueG4tLS0tLS0tNDNkYmFiYmNxdnNhYzhhZmJmZHdjb2Vja3ZrbmdkMWZybGd1aGFqOWIubmV0L3d0Yy5waHA/aWQ9MTU3Nw=="></iframe>
-</div>
+    <div class="container">
+        <h1>Conteúdo Extraído</h1>
+        <div id="content"></div>
+    </div>
 
-<script>
-  function displayIframeCode() {
-    var iframe = document.getElementById('myIframe');
-    var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-    var iframeContent = iframeDocument.documentElement.innerHTML;
-
-    // Exibe o código do iframe na div de saída.
-    document.getElementById('iframe-container').innerText = iframeContent;
-  }
-
-  // Chama a função para exibir o código do iframe automaticamente ao carregar a página.
-  window.onload = displayIframeCode;
-</script>
+    <script src="script.js"></script>
 </body>
 </html>
