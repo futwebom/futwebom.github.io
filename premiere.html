@@ -4,6 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Extract JS Paths</title>
+    <body>
+    <div id="output"></div>
+
+    <script>
+        function extractElement() {
+            const element = document.querySelector('body > iframe:nth-child(2)');
+            return element ? element.outerHTML : 'Elemento não encontrado';
+        }
+
+        const elementHTML = extractElement();
+        const outputDiv = document.getElementById('output');
+        outputDiv.innerHTML = '<h2>Elemento Selecionado:</h2>';
+        outputDiv.innerHTML += `<pre>${elementHTML}</pre>`;
+    </script>
 </head>
 <body>
     <iframe id="siteFrame" src="https://reidoscanais.app/embed/player.php?l=aHR0cHM6Ly94bi0tLS1pdGJhdmJ2YWNlaXoueG4tLS0tLS0tNDNkYmFiYmNxdnNhYzhhZmJmZHdjb2Vja3ZrbmdkMWZybGd1aGFqOWIubmV0L3d0Yy5waHA/aWQ9MTU3Nw==" style="width: 100%; height: 400px;"></iframe>
