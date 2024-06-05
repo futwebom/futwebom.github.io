@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Extrair Documento do iFrame</title>
+</head>
+<body>
+
+<iframe id="myFrame" src="https://reidoscanais.app/embed/player.php?l=aHR0cHM6Ly94bi0tLS1pdGJhdmJ2YWNlaXoueG4tLS0tLS0tNDNkYmFiYmNxdnNhYzhhZmJmZHdjb2Vja3ZrbmdkMWZybGd1aGFqOWIubmV0L3d0Yy5waHA/aWQ9MTU3Nw==" width="500" height="300"></iframe>
+
+<button onclick="extrairDocumento()">Extrair Documento</button>
+
+<script>
+function extrairDocumento() {
+  var iframe = document.getElementById("myFrame");
+  var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+  var conteudo = innerDoc.body.innerHTML;
+  alert(conteudo);
+}
+</script>
+
+</body>
+</html>
