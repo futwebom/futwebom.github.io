@@ -4,34 +4,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Extrair Documento do iFrame em JSON</title>
+    <title>Extrair Conteúdo do iFrame em JSON</title>
     <script>
         function extrairDocumento() {
-            // Obtém a referência do iframe
             var iframe = document.getElementById("meuIframe");
+            var conteudo = {};
 
-            // Verifica se o iframe está carregado
             if (iframe.contentDocument) {
-                // Obtém o conteúdo do documento do iframe
-                var conteudo = iframe.contentDocument.documentElement.outerHTML;
+                var doc = iframe.contentDocument;
+                var elementos = doc.body.getElementsByTagName("*");
 
-                // Converte o conteúdo para JSON
-                var jsonConteudo = { "conteudo": conteudo };
+                for (var i = 0; i < elementos.length; i++) {
+                    var elemento = elementos[i];
+                    var tag = elemento.tagName.toLowerCase();
+                    var id = elemento.id;
+                    var classes = Array.from(elemento.classList);
 
-                // Exibe o conteúdo JSON na página
-                document.getElementById("jsonOutput").textContent = JSON.stringify(jsonConteudo, null, 2);
+                    // Remove elementos de script para evitar problemas de segurança
+                    if (tag !== 'script') {
+                        if (!conteudo[tag]) {
+                            conteudo[tag] = [];
+                        }
+
+                        var elementoJSON = { "tag": tag };
+
+                        if (id) {
+                            elementoJSON["id"] = id;
+                        }
+
+                        if (classes.length > 0) {
+                            elementoJSON["classes"] = classes;
+                        }
+
+                        // Adiciona o conteúdo do elemento, removendo os nós de script
+                        elementoJSON["conteudo"] = elemento.innerHTML.replace(/<script.*?>.*?<\/script>/gi, '');
+
+                        conteudo[tag].push(elementoJSON);
+                    }
+                }
             } else {
                 console.log("O iframe ainda não foi carregado.");
             }
+
+            // Exibe o conteúdo JSON na página
+            document.getElementById("jsonOutput").textContent = JSON.stringify(conteudo, null, 2);
         }
     </script>
 </head>
 
 <body>
-    <h1>Extrair Documento do iFrame em JSON</h1>
+    <h1>Extrair Conteúdo do iFrame em JSON</h1>
 
-    <!-- Botão para extrair o documento do iframe -->
-    <button onclick="extrairDocumento()">Extrair Documento</button>
+    <!-- Botão para extrair o conteúdo do iframe -->
+    <button onclick="extrairDocumento()">Extrair Conteúdo</button>
 
     <!-- iFrame -->
     <iframe id="meuIframe" src="https://futwebom.github.io/docs2.html" width="800" height="600" frameborder="0"></iframe>
