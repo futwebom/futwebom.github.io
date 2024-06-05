@@ -1,30 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Extrair Documento do Iframe</title>
-<style>
-  #iframe-container {
-    width: 100%;
-    height: 500px;
-    overflow: auto; /* Adicionado para rolagem caso o conteúdo do iframe seja maior que o contêiner */
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exibir Conteúdo do iFrame em HTML</title>
+    <style>
+        /* Estilos para o conteúdo exibido */
+        #content {
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+    </style>
 </head>
 <body>
-<div id="iframe-container">
-  <iframe id="myIframe" src="https://xn----itbavbvaceiz.xn-------43dbabbcqvsac8afbfdwcoeckvkngd1frlguhaj9b.net/wtc.php?id=1577"></iframe>
-</div>
+    <iframe id="iframe" src="https://futwebom.github.io/docs2" style="display:none;"></iframe>
 
-<script>
-  window.onload = function() {
-    var iframe = document.getElementById('myIframe');
-    var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-    var iframeContent = iframeDocument.documentElement.innerHTML;
+    <div id="content">
+        <!-- Aqui será exibido o conteúdo do iframe -->
+    </div>
 
-    document.getElementById('iframe-container').innerHTML = iframeContent;
-  };
-</script>
+    <script>
+        function exibirConteudoDoIframe() {
+            var iframe = document.getElementById('iframe');
+            var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+            var bodyContent = iframeDocument.body.innerHTML;
+
+            // Exibir o conteúdo do iframe na página
+            var contentDiv = document.getElementById('content');
+            contentDiv.innerHTML = bodyContent;
+        }
+
+        // Chamada da função para exibir conteúdo do iframe
+        exibirConteudoDoIframe();
+    </script>
 </body>
 </html>
