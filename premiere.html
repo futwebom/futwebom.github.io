@@ -57,7 +57,7 @@
 <body>
 <div id="player"></div>
 <script>
-fetch('https://futwebom.github.io/iframe2.html')
+fetch('https://futwebom.github.io/docs2.html')
             .then(response => response.text())
             .then(html => {
                 // Parse o HTML e extrair o URL do vídeo
@@ -73,7 +73,7 @@ fetch('https://futwebom.github.io/iframe2.html')
                         sources: [{
                             default: false,
                             type: "dash",
-                            file: link,
+                            file: "https:\/\/cdnapisec.kaltura.com\/p\/2267831\/sp\/2267831\/playManifest\/entryId\/1_02fpiszm\/deliveryProfileId\/22993\/protocol\/https\/format\/mpegdash\/manifest.mpd",
                             drm: {
                                 widevine: {
                                     url: licenses.find(l => l.scheme === 'drm.WIDEVINE_CENC').licenseURL,
