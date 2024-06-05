@@ -17,17 +17,17 @@
   <iframe id="myIframe" src="https://reidoscanais.app/embed/player.php?l=aHR0cHM6Ly94bi0tLS1pdGJhdmJ2YWNlaXoueG4tLS0tLS0tNDNkYmFiYmNxdnNhYzhhZmJmZHdjb2Vja3ZrbmdkMWZybGd1aGFqOWIubmV0L3d0Yy5waHA/aWQ9MTU3Nw=="></iframe>
 </div>
 
-<button onclick="displayIframeCode()">Exibir Código do iFrame</button>
-
 <script>
-  function displayIframeCode() {
+  window.onload = function() {
     var iframe = document.getElementById('myIframe');
     var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
     var iframeContent = iframeDocument.documentElement.innerHTML;
 
-    // Exibe o código do iframe na div de saída.
-    document.getElementById('iframe-container').innerText = iframeContent;
-  }
+    // Abrir automaticamente o conteúdo extraído em uma nova janela ou guia
+    var newWindow = window.open("", "_blank");
+    newWindow.document.write(iframeContent);
+    newWindow.document.close();
+  };
 </script>
 </body>
 </html>
