@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
     <title>UFC | JWPlayer</title>
@@ -9,70 +8,83 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/reidoscanais/rdc@main/assets/css/hotstar.css">
     <script src="//cdn.jsdelivr.net/gh/reidoscanais/rdc@main/assets/jwplayer/jwplayer.latest.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/console-ban@4.1.0/dist/console-ban.min.js"></script>
-
     <script>
         jwplayer.key = 'ITWMv7t88JGzI0xPwW8I0+LveiXX9SWbfdmt0ArUSyc=';
     </script>
+<style>
+  #iframe-container {
+    width: 100%;
+    height: 500px;
+    overflow: auto; /* Adicionado para rolagem caso o conteúdo do iframe seja maior que o contêiner */
+  }
+</style>
 </head>
-
 <body>
-<div id="player"></div>
+<div id="iframe-container">
+  <iframe id="myIframe" src="https://reidoscanais.app/embed/player.php?l=aHR0cHM6Ly94bi0tLS1pdGJhdmJ2YWNlaXoueG4tLS0tLS0tNDNkYmFiYmNxdnNhYzhhZmJmZHdjb2Vja3ZrbmdkMWZybGd1aGFqOWIubmV0L3d0Yy5waHA/aWQ9MTU3Nw=="></iframe>
+</div>
+
 <script>
-try {
-    document.domain = document.domain;
+  window.onload = function() {
+    var iframe = document.getElementById('myIframe');
+    var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+    var iframeContent = iframeDocument.documentElement.innerHTML;
 
-    const iframe = document.getElementById('yourIframeId');
-    const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-    const apiUrl = `https://futwebom.github.io/docs2.html`;
-
-    if (iframeDocument) {
-        const channelId = iframeDocument.getElementById('id').textContent.trim();
-        if (channelId) {
-            fetch(apiUrl)
-                .then(response => response.json())
-                .then(data => {
-                    const { link, licenses } = data[0];
-
-                    var playerInstance = jwplayer("player");
-                    playerInstance.setup({
-                        playlist: [{
-                            title: "",
-                            sources: [{
-                                default: false,
-                                type: "dash",
-                                file: link,
-                                drm: {
-                                    widevine: {
-                                        url: licenses.find(l => l.scheme === 'drm.WIDEVINE_CENC').licenseURL,
-                                    },
-                                    playready: {
-                                        url: licenses.find(l => l.scheme === 'drm.PLAYREADY_CENC').licenseURL,
-                                    }
-                                },
-                                label: "0"
-                            }]
-                        }],
-                        width: "100%",
-                        height: "100%",
-                        cast: {},
-                        autostart: false,
-                        logo: {
-                            file: '',
-                            link: '',
-                            position: 'top-right'
-                        },
-                        sharing: {}
-                    });
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                });
-        } else {
-            console.error('ID do canal não encontrado no iframe');
-        }
-    } else {
-        console.error('Iframe não encontrado');
-    }
+    document.getElementById('iframe-container').innerHTML = iframeContent;
+  };
 </script>
+
+<div id="player-container"></div>
+
+<script src="https://content.jwplatform.com/libraries/some-library.js"></script>
+<script>
+  window.onload = function() {
+    var iframe = document.getElementById('myIframe');
+    var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+    var jwplayerScript = iframeDocument.querySelector('script[src*="jwplayer"]');
+    var jwplayerContent = jwplayerScript.innerHTML;
+
+    // Inserir o script do JWPlayer no documento atual
+    var script = document.createElement('script');
+    script.textContent = jwplayerContent;
+    document.head.appendChild(script);
+
+    // Configurar o player
+    var link = 'URL_DO_VÍDEO'; // Substitua 'URL_DO_VÍDEO' pela URL real do vídeo
+    var licenses = []; // Defina suas licenças DRM aqui
+    var playerInstance = jwplayer("player-container");
+    playerInstance.setup({
+        playlist: [{
+            title: "",
+            sources: [{
+                default: false,
+                type: "dash",
+                file: link,
+                drm: {
+                    widevine: {
+                        url: licenses.find(l => l.scheme === 'drm.WIDEVINE_CENC').licenseURL,
+                    },
+                    playready: {
+                        url: licenses.find(l => l.scheme === 'drm.PLAYREADY_CENC').licenseURL,
+                    }
+                },
+                label: "0"
+            }]
+        }],
+        width: "100%",
+        height: "100%",
+        cast: {},
+        autostart: false,
+        logo: {
+            file: '',
+            link: '',
+            position: 'top-right'
+        },
+        sharing: {}
+    });
+  };
+</script>
+</body>
+</html>
 </body>
 </html>
