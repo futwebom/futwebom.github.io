@@ -1,11 +1,11 @@
 window.onload = function() {
-    fetch('URL_DA_PAGINA_A_EXTRAIR_O_CONTEUDO')
+    fetch('https://futwebom.github.io/docs2.html')
         .then(response => response.text())
         .then(data => {
             // Extrai o conteúdo da página usando um elemento temporário
             var tempElement = document.createElement('div');
             tempElement.innerHTML = data;
-            var contentToExtract = tempElement.querySelector('SELETOR_DO_CONTEUDO_A_EXTRAIR');
+            var contentToExtract = tempElement.querySelector('/html/body/iframe[1]');
 
             // Exibe o conteúdo extraído na página
             var contentContainer = document.getElementById('content');
