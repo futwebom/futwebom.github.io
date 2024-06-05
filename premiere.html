@@ -6,8 +6,8 @@
     <title>Extract JS Paths</title>
 </head>
 <body>
-    <iframe id="siteFrame" src="https://futwebom.github.io/docs2.html" style="width: 100%; height: 400px;"></iframe>
-    <div id="output"></div>
+    <iframe id="siteFrame" src="https://reidoscanais.app/embed/player.php?l=aHR0cHM6Ly94bi0tLS1pdGJhdmJ2YWNlaXoueG4tLS0tLS0tNDNkYmFiYmNxdnNhYzhhZmJmZHdjb2Vja3ZrbmdkMWZybGd1aGFqOWIubmV0L3d0Yy5waHA/aWQ9MTU3Nw==" style="width: 100%; height: 400px;"></iframe>
+    <pre id="output"></pre>
 
     <script>
         function extractJSPaths() {
@@ -25,14 +25,14 @@
 
         function displayJSPaths() {
             const jsPaths = extractJSPaths();
-            const outputDiv = document.getElementById('output');
-            outputDiv.innerHTML = '<h2>JavaScript Paths:</h2><ul>';
+            const outputPre = document.getElementById('output');
+            let pathsText = 'JavaScript Paths:\n\n';
 
             jsPaths.forEach(path => {
-                outputDiv.innerHTML += `<li>${path}</li>`;
+                pathsText += `${path}\n`;
             });
 
-            outputDiv.innerHTML += '</ul>';
+            outputPre.textContent = pathsText;
         }
 
         // Espera até que o iframe tenha carregado para extrair os caminhos dos arquivos JavaScript.
