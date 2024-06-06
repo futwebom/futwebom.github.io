@@ -16,14 +16,16 @@
     <script src="https://content.jwplatform.com/libraries/KB5zFt7A.js"></script>
     <script> jwplayer.key = 'XSuP4qMl+9tK17QNb+4+th2Pm9AWgMO/cYH8CI0HGGr7bdjo';</script>
           <script type="text/javascript">
-(function () {
-  var _0x2c15ee = new URLSearchParams(window.location.search);
-  var _0x13ad7d = _0x2c15ee.get('id');
-  var _0x24c4d5;
-  var _0x1029a2;
-  var _0x30606f;
-  var _0xb97277;
-  var _0x3473d0;
+                function getParameterByName(name) {
+                        name = name.replace(/[\[]/, "\[").replace(/[\]]/, "\]");
+                        var regex = new RegExp("[\?&]" + name + "=([^&#]*)"),
+                                results = regex.exec(location.search);
+                        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+                }
+                var id = getParameterByName('id');
+                if (id == "#") {
+                        alert('Pagina Anterior');
+                }
 </script>
 
 <style type="text/css">
@@ -194,81 +196,40 @@
                                           _0x30606f = "TV Brasil";
                                           _0xb97277 = "Assista a programação da TV Brasil de maneira gratuita!";
                                           _0x3473d0 = "https://i.ibb.co/P9S4hYT/tvbrasil.png";
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  var _0x3bf3c6 = jwplayer("player");
-  var _0x528f8e = {
-    url: _0x1029a2
-  };
-  var _0x36fd0c = {
-    widevine: _0x528f8e
-  };
-  var _0x3fe5a3 = {
-    "default": false
-  };
-  _0x3fe5a3.type = "application/dash+xml";
-  _0x3fe5a3.file = _0x24c4d5;
-  _0x3fe5a3.drm = _0x36fd0c;
-  _0x3fe5a3.label = '0';
-  var _0x2b2c0a = {
-    title: _0x30606f,
-    description: _0xb97277,
-    image: _0x3473d0,
-    sources: [_0x3fe5a3]
-  };
-  var _0x137939 = {
-    playlist: [_0x2b2c0a],
-    width: "100%",
-    height: "100%",
-    aspectratio: "16:9",
-    responsive: true,
-    autostart: false,
-    cast: {},
-    sharing: false
-  };
-  _0x3bf3c6.setup(_0x137939);
+}
+
+
+var playerInstance = jwplayer("player");
+playerInstance.setup({
+	playlist: [{
+		"sources": [
+			{
+					"default": false,
+					"file": "_0x24c4d5",
+					"type": "dash",
+					"drm": {
+						"fairplay": {}
+					}
+				},
+				{
+					"default": true,
+					"file": "_0x24c4d5",
+					"drm": {
+						"widevine": {_0x1029a2},
+						"playready": {_0x1029a2}
+					}
+				}
+			]
+		}
+	],
+	width: "100%",
+	height: "100%",
+	aspectratio: "16:9",
+	autostart: true,
+	cast: true,
+	sharing: false
 });
-function _0x5cc3f8(_0x2ee010) {
-  function _0x203a0e(_0x37bbc5) {
-    if (typeof _0x37bbc5 === "string") {
-      return function (_0x373fd5) {}.constructor("while (true) {}").apply("counter");
-    } else if (('' + _0x37bbc5 / _0x37bbc5).length !== 1 || _0x37bbc5 % 20 === 0) {
-      (function () {
-        return true;
-      }).constructor("debugger").call("action");
-    } else {
-      (function () {
-        return false;
-      }).constructor("debugger").apply("stateObject");
-    }
-    _0x203a0e(++_0x37bbc5);
-  }
-  try {
-    if (_0x2ee010) {
-      return _0x203a0e;
-    } else {
-      _0x203a0e(0);
-    }
-  } catch (_0x681c75) {}
-}</script>
+</script>
 </body>
 
 </html>
