@@ -4,52 +4,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Extrair Informações do iFrame</title>
+    <title>Exibir Código Fonte da Página no iFrame</title>
     <script>
-        function extrairInformacoes() {
+        function exibirCodigoFonte() {
             var iframe = document.getElementById("meuIframe");
 
             if (iframe.contentDocument) {
                 var doc = iframe.contentDocument;
+                var codigoFonte = doc.documentElement.outerHTML;
 
-                // Verifica se o segundo link foi carregado dentro do iframe
-                var segundoIframe = doc.getElementById("segundoIframe");
-                if (segundoIframe && segundoIframe.contentDocument) {
-                    var segundoDoc = segundoIframe.contentDocument;
-                    var scriptContent = segundoDoc.querySelector('script:not([src])').textContent;
-
-                    // Extrair o link e a URL da licença Widevine do conteúdo do script no segundo iframe
-                    var linkMatch = scriptContent.match(/"file": "(.*?)"/);
-                    var link = linkMatch ? linkMatch[1] : "Não encontrado";
-
-                    var widevineURLMatch = scriptContent.match(/"url": "(.*?)"/);
-                    var widevineURL = widevineURLMatch ? widevineURLMatch[1] : "Não encontrado";
-
-                    // Exibir as informações extraídas
-                    document.getElementById("link").textContent = link;
-                    document.getElementById("scheme":"drm.WIDEVINE_CENC","licenseURL").textContent = widevineURL;
-                } else {
-                    console.log("O segundo iframe ainda não foi carregado.");
-                }
+                // Exibe o código fonte da página dentro do iframe em um elemento na página principal
+                document.getElementById("codigoFonte").textContent = codigoFonte;
             } else {
                 console.log("O iframe ainda não foi carregado.");
             }
         }
 
-        // Extrair as informações do iframe assim que o documento for carregado
-        window.onload = extrairInformacoes;
+        // Exibe o código fonte da página no iframe assim que o documento for carregado
+        window.onload = exibirCodigoFonte;
     </script>
 </head>
 
 <body>
-    <h1>Extrair Informações do iFrame</h1>
+    <h1>Exibir Código Fonte da Página no iFrame</h1>
 
     <!-- iFrame -->
     <iframe id="meuIframe" src="https://reidoscanais.app/embed/player.php?l=aHR0cHM6Ly94bi0tLS1pdGJhdmJ2YWNlaXoueG4tLS0tLS0tNDNkYmFiYmNxdnNhYzhhZmJmZHdjb2Vja3ZrbmdkMWZybGd1aGFqOWIubmV0L3d0Yy5waHA/aWQ9MTU3Nw==" width="800" height="600" frameborder="0"></iframe>
 
-    <!-- Elementos para exibir as informações extraídas -->
-    <p>Link: <span id="link"></span></p>
-    <p>URL da licença Widevine: <span id="scheme":"drm.WIDEVINE_CENC","licenseURL"></span></p>
+    <!-- Elemento para exibir o código fonte da página -->
+    <pre id="codigoFonte"></pre>
 </body>
 
 </html>
