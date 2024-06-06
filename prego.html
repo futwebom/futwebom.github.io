@@ -6,18 +6,14 @@
 <title>Verificar Links</title>
 <script>
 async function verificarLinks() {
+    const maxNum = parseInt(document.getElementById('maxNum').value) || 10000;
     const baseURLs = [
-        'https://0001-vos.dtvott.com/DASH/manifest.mpd',
-        'https://0001-vos.dtvott.com/dash_live_0072/manifest.mpd',
         'https://0001-vos.dtvott.com/dash_live_0079/manifest.mpd',
-        'https://0001-jbc.dtvott.com/dash_live_0072/manifest.mpd',
         'https://0001-jbc.dtvott.com/dash_live_0079/manifest.mpd',
-        'https://0001-abc-da-bpk.dtvott.com/dash_live_0072/manifest.mpd',
-        'https://0001-jbc-da-bpk.dtvott.com/dash_live_0079/manifest.mpd',
-        'https://0001-abc-da-bpk.dtvott.com/dash_live_0079/manifest.mpd',
+        'https://0001-jbc.dtvott.com/dash_live_0072/manifest.mpd',
+        'https://0001-vos.dtvott.com/dash_live_0072/manifest.mpd',
         // Adicione mais URLs conforme necessário
     ];
-    const maxNum = 5000;
     const resultsContainer = document.getElementById('results');
     
     resultsContainer.innerHTML = ''; // Limpa os resultados anteriores
@@ -57,9 +53,9 @@ function pad(num, size) {
 </head>
 <body>
 <h1>Verificar Links</h1>
-<script>
-verificarLinks();
-</script>
+<label for="maxNum">Número Máximo:</label>
+<input type="text" id="maxNum" value="10000">
+<button onclick="verificarLinks()">Verificar</button>
 <div id="results"></div>
 </body>
 </html>
