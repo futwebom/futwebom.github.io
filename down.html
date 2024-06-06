@@ -74,46 +74,31 @@
     <script src="//fastly.jsdelivr.net/npm/disable-devtool@latest/disable-devtool.min.js"></script>
     <script>
         jwplayer.key = 'XSuP4qMl+9tK17QNb+4+th2Pm9AWgMO/cYH8CI0HGGr7bdjo';
-        var id = ""; // Coloque aqui o valor de id que deseja
-        var url = ""; // Coloque aqui a URL que deseja
-        var keyId = ""; // Coloque aqui o valor de keyId que deseja
-        var key = ""; // Coloque aqui o valor de key que deseja
-
-        if (id === "espn-2") {
-            document.getElementById("player").innerHTML = '<iframe src="https://mantoplushigh.com/6984713.html?get=https://live-ftc-sa-east-1.media.starott.com/gru1/va01/starplus/event/2024/06/05/Fortaleza_vs_CRB_20240605_1717621238029/ctr-all-sliding.m3u8&img=https://prod-ripcut-delivery.disney-plus.net/v1/variant/star/16BF0E151D7D2BD229953124455AA75390A95F07C5AB82665F19D4A68DDD00A1/scale?width=1920&aspectRatio=1.78&format=jpeg&key=3f0966d7270948518571d8e71d3bd4dd&key2=d9ea984a116c2098990a1cbd598a2e76" width="100%" height="100%" scrolling="no" allow="encrypted-media" allowfullscreen="true" frameborder="0" style="position:absolute; top:0; left: 0"></iframe>';
-        } else if (id === "espn") {
-            document.getElementById("player").innerHTML = '<iframe src="https://meuplayeronlinehd.com/myplay/watch2.html?id=espn" width="100%" scrolling="no" allow="encrypted-media" allowfullscreen="true" frameborder="0" style="position:absolute; top:0; left: 0"></iframe>';
-        } else if (id === "espn-3") {
-            document.getElementById("player").innerHTML = '<iframe src="https://meuplayeronlinehd.com/myplay/embedm.html?id=espn" width="100%" scrolling="no" allow="encrypted-media" allowfullscreen="true" frameborder="0" style="position:absolute; top:0; left: 0"></iframe>';
-        } else if (id === "espn2-2") {
-            document.getElementById("player").innerHTML = '<iframe src="https://mantoplushigh.com/6984713.html?get=https://live-ftc-na-south-2.media.starott.com/gru1/qb01/starplus/event/2024/06/01/Edmonton_Oilers_vs_Dallas_20240601_1717196433022/ctr-all-sliding.m3u8&img=https://prod-ripcut-delivery.disney-plus.net/v1/variant/star/48022CC2713B0CFD8D42931D98E1D719AC489FB35DDE6D991634615714F3EF6C/scale?width=1920&aspectRatio=1.78&format=jpeg&key=44132ff856064256a13815168b9c8709&key2=d4a7ef97dba0a72f655305e0e468ba8c" width="100%" height="100%" scrolling="no" allow="encrypted-media" allowfullscreen="true" frameborder="0" style="position:absolute; top:0; left: 0"></iframe>';
-        } else if (id === "espn2") {
-            document.getElementById("player").innerHTML = '<iframe src="https://meuplayeronlinehd.com/myplay/embedm.html?id=espn2" width="100%" height="100%" scrolling="no" allow="encrypted-media" allowfullscreen="true" frameborder="0" style="position:absolute; top:0; left: 0"></iframe>';
-        } else if (id === "multishow") {
-            document.getElementById("player").innerHTML = '<iframe src="https://meuplayeronlinehd.com/myplay/dgplay.html?id=multishow" width="100%" height="100%" scrolling="no" allow="encrypted-media" allowfullscreen="true" frameborder="0" style="position:absolute; top:0; left: 0"></iframe>';
-        } else {
-            setupPlayer(url, keyId, key);
+        
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\[").replace(/[\]]/, "\]");
+            var regex = new RegExp("[\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
         }
+        
+        var id = getParameterByName('id');
+        var url = '';
 
-         function setupPlayer(url, keyId, key) {
-            // Verifica se todos os parâmetros foram fornecidos
-            if (url && keyId && key) {
-                // Configuração do player com os parâmetros fornecidos
-                document.getElementById("player").innerHTML = '<iframe src="' + url + '" width="100%" height="100%" scrolling="no" allow="encrypted-media" allowfullscreen="true" frameborder="0" style="position:absolute; top:0; left: 0"></iframe>';
-            } else {
-                // Caso algum parâmetro esteja faltando, exibe uma mensagem de erro
-                document.getElementById("player").innerHTML = '<p>Erro: Não foi possível carregar o player. Por favor, verifique as configurações.</p>';
-            }
+        if (id == "ae") {
+            url = 'https://meuplayeronlinehd.com/myplay/watch.html?id=band';
+        } else if (id == "sonymovies") {
+            url = 'https://meuplayeronlinehd.com/myplay/watch.html?id=band';
+        } else if (id == "nick") {
+            url = 'https://meuplayeronlinehd.com/myplay/watch.html?id=band';
+        } // Add more conditions for other IDs
+        
+        // Check if URL is not empty and then create an iframe
+        if (url) {
+            var iframe = document.createElement('iframe');
+            iframe.setAttribute('src', url);
+            document.getElementById('player').appendChild(iframe);
         }
-
-        // Exemplo de chamada da função setupPlayer
-        var id = "example-id";
-        var url = "https://exemplo.com/video.m3u8";
-        var keyId = "example-key-id";
-        var key = "example-key";
-        setupPlayer(url, keyId, key);
-    </script> 
     </script> 
 </body>
 </html>
-
