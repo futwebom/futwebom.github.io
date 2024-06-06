@@ -5,16 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Verificar Links</title>
 <script>
-window.onload = function() {
-    verificarLinks();
-};
-
-async function verificarLinks() {
+function verificarLinks() {
     const baseURLs = [
         'https://0001-vos.dtvott.com/DASH/manifest.mpd',
-        'https://example.com/1',
-        'https://example.com/2',
-        'https://example.com/3'
+        'https://0001-vos.dtvott.com/dash_live_0072/manifest.mpd',
+        'https://0001-vos.dtvott.com/dash_live_0079/manifest.mpd',
+        'https://0001-jbc.dtvott.com/dash_live_0072/manifest.mpd',
+        'https://0001-jbc.dtvott.com/dash_live_0079/manifest.mpd',
+        'https://0001-abc-da-bpk.dtvott.com/dash_live_0072/manifest.mpd',
+        'https://0001-jbc-da-bpk.dtvott.com/dash_live_0079/manifest.mpd'
+        'https://0001-abc-da-bpk.dtvott.com/dash_live_0079/manifest.mpd',
         // Adicione mais URLs conforme necessário
     ];
     const maxNum = 10000;
@@ -27,7 +27,7 @@ async function verificarLinks() {
     baseURLs.forEach(baseURL => {
         for (let i = 1; i <= maxNum; i++) {
             const url = baseURL.replace('0001', pad(i, 4)); // Substitui o número
-            await verificarLink(url, linksSet); // Espera pela verificação do link
+            verificarLink(url, linksSet);
         }
     });
 }
@@ -62,6 +62,7 @@ function pad(num, size) {
 </head>
 <body>
 <h1>Verificar Links</h1>
+<button onclick="verificarLinks()">Verificar</button>
 <div id="results"></div>
 </body>
 </html>
