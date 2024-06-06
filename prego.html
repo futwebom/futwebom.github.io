@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verificar Links</title>
+<script>
+async function verificarLinks() {
+    const baseURLs = [
+        'https://0001-vos.dtvott.com/DASH/manifest.mpd',
+        'https://0001-vos.dtvott.com/dash_live_0072/manifest.mpd',
+        'https://0001-vos.dtvott.com/dash_live_0079/manifest.mpd',
+        'https://0001-jbc.dtvott.com/dash_live_0072/manifest.mpd',
+        'https://0001-jbc.dtvott.com/dash_live_0079/manifest.mpd',
+        'https://0001-abc-da-bpk.dtvott.com/dash_live_0072/manifest.mpd',
+        'https://0001-jbc-da-bpk.dtvott.com/dash_live_0079/manifest.mpd',
+        'https://0001-abc-da-bpk.dtvott.com/dash_live_0079/manifest.mpd',
+        // Adicione mais URLs conforme necessário
+    ];
+    const maxNum = 10000;
+    const resultsContainer = document.getElementById('results');
+    
+    resultsContainer.innerHTML = ''; // Limpa os resultados anteriores
+    
+    for (let baseURL of baseURLs) {
+        for (let i = 1; i <= maxNum; i++) {
+            const url = baseURL.replace('0001', pad(i, 4)); // Substitui o número
+            await verificarLink(url);
+        }
+    }
+}
+
+async function verificarLink(url) {
+    try {
+        const response = await fetch(url);
+        if (response.ok) {
+            adicionarResultado(url, 'Funcionando');
+        }
+    } catch (error) {
+        // Não faz nada em caso de erro
+    }
+}
+
+function adicionarResultado(url, status) {
+    const resultsContainer = document.getElementById('results');
+    const resultElement = document.createElement('div');
+    resultElement.textContent = `${url}: ${status}`;
+    resultsContainer.appendChild(resultElement);
+}
+
+function pad(num, size) {
+    let s = num + "";
+    while (s.length < size) s = "0" + s;
+    return s;
+}
+</script>
+</head>
+<body>
+<h1>Verificar Links</h1>
+<script>
+verificarLinks();
+</script>
+<div id="results"></div>
+</body>
+</html>
