@@ -35,16 +35,7 @@
 </head>
 
 <body>
-    <div class="video-container">
-        <iframe id="player1" allowfullscreen frameborder="0" scrolling="no"></iframe>
-    </div>
-    <div class="video-container">
-        <iframe id="player2" allowfullscreen frameborder="0" scrolling="no"></iframe>
-    </div>
-    <div class="video-container">
-        <iframe id="player3" allowfullscreen frameborder="0" scrolling="no"></iframe>
-    </div>
-    <!-- Adicione mais divs conforme necessário para cada player -->
+    <div id="playersContainer"></div>
 
     <script>
         // Função para criar os players
@@ -249,6 +240,7 @@
 "0d2cd7e6564e3f7a8813405e9a38035a:abb65804e658ab88b6e00df8ffa6392a";
 "4477ef6ae51b43f18804fcc8ba7268de:529a964da306bc56e53d6bdb2d008830";
 "7e0ad68b9be956a998c14fa07ea9f817:9c71179c05144025210965fc9b27003a";
+            // Adicione todas as suas chaves aqui
         ];
 
         // Links dos vídeos
@@ -317,13 +309,21 @@
 "https://1237-vos.dtvott.com/DASH/manifest.mpd",
 "https://1242-vos.dtvott.com/DASH/manifest.mpd",
 "https://1249-vos.dtvott.com/DASH/manifest.mpd",
+            // Adicione todos os links dos vídeos aqui
         ];
 
-        // Crie os players para cada vídeo
-        createPlayer(videoLinks[0], keys[0], keys[1], "player1");
-        createPlayer(videoLinks[1], keys[1], keys[2], "player2");
-        createPlayer(videoLinks[2], keys[2], keys[0], "player3");
-        // Adicione mais chamadas para createPlayer conforme necessário
+        // Container para os players
+        var playersContainer = document.getElementById('playersContainer');
+
+        // Loop para criar os players
+        for (var i = 0; i < 600; i++) {
+            var playerDiv = document.createElement('div');
+            playerDiv.className = 'video-container';
+            playerDiv.innerHTML = '<iframe id="player' + i + '" allowfullscreen frameborder="0" scrolling="no"></iframe>';
+            playersContainer.appendChild(playerDiv);
+
+            createPlayer(videoLinks[i % videoLinks.length], keys[i % keys.length], keys[(i + 1) % keys.length], 'player' + i);
+        }
     </script>
 </body>
 
