@@ -6,20 +6,15 @@
 <title>Verificar Links</title>
 <script>
 async function verificarLinks() {
-    const maxNum = parseInt(document.getElementById('maxNum').value) || 10000;
-    const baseURLs = [
-        'https://d1r94zrwa3gnlo.cloudfront.net/livestore102/stream/hls/001/001.m3u8',
-        // Adicione mais URLs conforme necessário
-    ];
+    const baseURL = 'https://1249-vos.dtvott.com/DASH/manifest.mpd';
+    const maxNum = 5000;
     const resultsContainer = document.getElementById('results');
     
     resultsContainer.innerHTML = ''; // Limpa os resultados anteriores
     
-    for (let baseURL of baseURLs) {
-        for (let i = 1; i <= maxNum; i++) {
-            const url = baseURL.replace('001/001', pad(i, 4)); // Substitui o número
-            await verificarLink(url);
-        }
+    for (let i = 1; i <= maxNum; i++) {
+        const url = baseURL.replace('1249', pad(i, 4)); // Substitui o número
+        await verificarLink(url);
     }
 }
 
@@ -30,7 +25,7 @@ async function verificarLink(url) {
             adicionarResultado(url, 'Funcionando');
         }
     } catch (error) {
-        // Não faz nada em caso de erro
+        // Não faz nada se o link não funcionar
     }
 }
 
@@ -50,8 +45,6 @@ function pad(num, size) {
 </head>
 <body>
 <h1>Verificar Links</h1>
-<label for="maxNum">Número Máximo:</label>
-<input type="text" id="maxNum" value="10000">
 <button onclick="verificarLinks()">Verificar</button>
 <div id="results"></div>
 </body>
