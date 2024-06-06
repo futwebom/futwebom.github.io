@@ -5,16 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Verificar Links</title>
 <script>
-async function verificarLinks() {
-    const baseURL = 'https://0001-jbc-da-bpk.dtvott.com/dash_live_0079/manifest.mpd'; // Alteração aqui
-    const maxNum = 5000;
+function verificarLinks() {
+    const baseURL = 'https://0001-jbc-da-bpk.dtvott.com/dash_live_0079/manifest.mpd';
+    const maxNum = 10000;
     const resultsContainer = document.getElementById('results');
     
     resultsContainer.innerHTML = ''; // Limpa os resultados anteriores
     
-    for (let i = 0001; i <= maxNum; i++) { // Alteração aqui
+    for (let i = 1; i <= maxNum; i++) {
         const url = baseURL.replace('0001', pad(i, 4)); // Substitui o número
-        await verificarLink(url);
+        verificarLink(url);
     }
 }
 
@@ -23,9 +23,11 @@ async function verificarLink(url) {
         const response = await fetch(url);
         if (response.ok) {
             adicionarResultado(url, 'Funcionando');
+        } else {
+            adicionarResultado(url, 'Não Funcionando');
         }
     } catch (error) {
-        // Não faz nada se o link não funcionar
+        adicionarResultado(url, 'Erro ao verificar');
     }
 }
 
