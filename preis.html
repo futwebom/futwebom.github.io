@@ -204,20 +204,16 @@ playerInstance.setup({
 	playlist: [{
 		"sources": [
 			{
-					"default": false,
-					"file": "link",
-					"type": "dash",
-					"drm": {
-						"fairplay": {}
-					}
-				},
-				{
 					"default": true,
+					"type": "dash",
 					"file": "link",
 					"drm": {
-						"widevine": {linkwidevine},
-						"playready": {linkwidevine}
-					}
+						"widevine": {
+							"url": "linkwidevine"
+						},
+						"playready": {}
+					},
+					"label": "1"
 				}
 			]
 		}
