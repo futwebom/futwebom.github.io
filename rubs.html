@@ -32,33 +32,29 @@
     <script>
         jwplayer.key = 'XSuP4qMl+9tK17QNb+4+th2Pm9AWgMO/cYH8CI0HGGr7bdjo';
     </script>
-    <script type="text/javascript">
-        function getParameterByName(name) {
-            name = name.replace(/[\[]/, "\[").replace(/[\]]/, "\]");
-            var regex = new RegExp("[\?&]" + name + "=([^&#]*)"),
-                results = regex.exec(location.search);
-            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-        }
-        var id = getParameterByName('id');
-        if (id == "#") {
-            alert('Pagina Anterior');
-        }
-    </script>
 </head>
 
 <body>
     <div class="video-container">
-        <iframe id="player" allowfullscreen frameborder="0" scrolling="no"></iframe>
+        <iframe id="player1" allowfullscreen frameborder="0" scrolling="no"></iframe>
     </div>
+    <div class="video-container">
+        <iframe id="player2" allowfullscreen frameborder="0" scrolling="no"></iframe>
+    </div>
+    <div class="video-container">
+        <iframe id="player3" allowfullscreen frameborder="0" scrolling="no"></iframe>
+    </div>
+    <!-- Adicione mais divs conforme necessário para cada player -->
+
     <script>
-        // Função para criar o player com os iframes
-        function createPlayer(url, k, k2) {
+        // Função para criar os players
+        function createPlayer(url, k, k2, playerId) {
             if (typeof k2 !== 'undefined') {
                 const kid = k.substr(0, 32);
                 const key = k.substr(33, 65);
                 const kid2 = k2.substr(0, 32);
                 const key2 = k2.substr(33, 65);
-                var playerInstance = jwplayer("player");
+                var playerInstance = jwplayer(playerId);
                 playerInstance.setup({
                     playlist: [{
                         "sources": [{
@@ -88,7 +84,7 @@
             } else {
                 const kid = k.substr(0, 32);
                 const key = k.substr(33, 65);
-                var playerInstance = jwplayer("player");
+                var playerInstance = jwplayer(playerId);
                 playerInstance.setup({
                     playlist: [{
                         "sources": [{
@@ -253,9 +249,10 @@
 "0d2cd7e6564e3f7a8813405e9a38035a:abb65804e658ab88b6e00df8ffa6392a";
 "4477ef6ae51b43f18804fcc8ba7268de:529a964da306bc56e53d6bdb2d008830";
 "7e0ad68b9be956a998c14fa07ea9f817:9c71179c05144025210965fc9b27003a";
-];
- // Links dos vídeos
-    const videoLinks = [
+        ];
+
+        // Links dos vídeos
+        const videoLinks = [
 "https://0003-vos.dtvott.com/DASH/manifest.mpd",
 "https://0015-vos.dtvott.com/DASH/manifest.mpd",
 "https://0059-vos.dtvott.com/DASH/manifest.mpd",
@@ -320,13 +317,14 @@
 "https://1237-vos.dtvott.com/DASH/manifest.mpd",
 "https://1242-vos.dtvott.com/DASH/manifest.mpd",
 "https://1249-vos.dtvott.com/DASH/manifest.mpd",
-    ];
+        ];
 
-    // Loop para criar um player para cada vídeo
-    for (let i = 0; i < videoLinks.length; i++) {
-        const url = videoLinks[i];
-        const k = keys[i % keys.length];
-        const k2 = keys[(i + 1) % keys.length]; // Adicionar lógica para k2, se necessário
-        createPlayer(url, k, k2);
-    }
-</script>
+        // Crie os players para cada vídeo
+        createPlayer(videoLinks[0], keys[0], keys[1], "player1");
+        createPlayer(videoLinks[1], keys[1], keys[2], "player2");
+        createPlayer(videoLinks[2], keys[2], keys[0], "player3");
+        // Adicione mais chamadas para createPlayer conforme necessário
+    </script>
+</body>
+
+</html>
