@@ -6,14 +6,14 @@
 <title>Verificar Links</title>
 <script>
 async function verificarLinks() {
-    const baseURL = 'https://1249-vos.dtvott.com/DASH/manifest.mpd'; // Alteração aqui
+    const baseURL = 'https://0001-bbc.dtvott.com/dash_live_0079/manifest.mpd'; // Alteração aqui
     const maxNum = 2000;
     const resultsContainer = document.getElementById('results');
     
     resultsContainer.innerHTML = ''; // Limpa os resultados anteriores
     
-    for (let i = 1249; i <= maxNum; i++) { // Alteração aqui
-        const url = baseURL.replace('1249', pad(i, 4)); // Substitui o número
+    for (let i = 0001; i <= maxNum; i++) { // Alteração aqui
+        const url = baseURL.replace('0001', pad(i, 4)); // Substitui o número
         await verificarLink(url);
     }
 }
