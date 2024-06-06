@@ -95,9 +95,24 @@
             setupPlayer(url, keyId, key);
         }
 
-        function setupPlayer(url, keyId, key) {
-            // Coloque aqui a lógica para configurar o player caso nenhum ID correspondente seja encontrado
+         function setupPlayer(url, keyId, key) {
+            // Verifica se todos os parâmetros foram fornecidos
+            if (url && keyId && key) {
+                // Configuração do player com os parâmetros fornecidos
+                document.getElementById("player").innerHTML = '<iframe src="' + url + '" width="100%" height="100%" scrolling="no" allow="encrypted-media" allowfullscreen="true" frameborder="0" style="position:absolute; top:0; left: 0"></iframe>';
+            } else {
+                // Caso algum parâmetro esteja faltando, exibe uma mensagem de erro
+                document.getElementById("player").innerHTML = '<p>Erro: Não foi possível carregar o player. Por favor, verifique as configurações.</p>';
+            }
         }
+
+        // Exemplo de chamada da função setupPlayer
+        var id = "example-id";
+        var url = "https://exemplo.com/video.m3u8";
+        var keyId = "example-key-id";
+        var key = "example-key";
+        setupPlayer(url, keyId, key);
+    </script> 
     </script> 
 </body>
 </html>
