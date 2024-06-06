@@ -5,16 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Verificar Links</title>
 <script>
-function verificarLinks() {
-    const baseURL = 'https://0001-vos.dtvott.com/DASH/manifest.mpd';
-    const maxNum = 10000;
+async function verificarLinks() {
+    const baseURL = 'https://0001-vos.dtvott.com/DASH/manifest.mpd'; // Substitua pelo URL base correto
+    const maxNum = 5000; // Número máximo de links a serem verificados
     const resultsContainer = document.getElementById('results');
     
     resultsContainer.innerHTML = ''; // Limpa os resultados anteriores
     
     for (let i = 1; i <= maxNum; i++) {
-        const url = baseURL.replace('0001', pad(i, 4)); // Substitui o número
-        verificarLink(url);
+        const url = `${baseURL}${i}`; // Crie o URL completo
+        await verificarLink(url);
     }
 }
 
@@ -36,12 +36,6 @@ function adicionarResultado(url, status) {
     const resultElement = document.createElement('div');
     resultElement.textContent = `${url}: ${status}`;
     resultsContainer.appendChild(resultElement);
-}
-
-function pad(num, size) {
-    let s = num + "";
-    while (s.length < size) s = "0" + s;
-    return s;
 }
 </script>
 </head>
