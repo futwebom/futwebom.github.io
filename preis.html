@@ -22,7 +22,7 @@
                                 results = regex.exec(location.search);
                         return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
                 }
-                var id = getParameterByName('iu');
+                var id = getParameterByName('id');
                 if (id == "#") {
                         alert('Pagina Anterior');
                 }
@@ -57,73 +57,78 @@
 
 <div id="player" style="width:100%;height:100%;text-align:center;"></div>
 <script>
- if (id === "espn") {
-  url = "https://brflu.walk-tv.com/5912/index.m3u8?token=7ed51034a6314ff58c5a005ec393d904";
-} else {
-  if (id === "espn2") {
-    url = "https://brflu.walk-tv.com/5910/index.m3u8?token=7ed51034a6314ff58c5a005ec393d904";
-  } else {
-    if (id === "espn3") {
-      url = "https://m3u8.gs/a2/docs/espn3/__index.m3u8?mu3zAQc9HC3GbwJq=71IpkezXtaUNIfZkAjvvhg&3U1G7qaTxrPbalZnEx=1709862188";
-    } else {
-      if (id === "espn4") {
-        url = "https://xn--4yyxpd9bwkc3pt40i0thra3jpmwjmpn6s6d12sl2vq7yjb88e3jg-eb5brl.bnih8hbhyn2hif0bqm8xlnwa886tsrwbpwrvg7oalg4weca5dfuhkfb51z7u2lj.foo/a2/docs/espn4/__index.m3u8?mu3zAQc9HC3GbwJq=Tg3M8vTKbZpN9W7yFIwynA&3U1G7qaTxrPbalZnEx=1710629229";
-      } else {
-        if (id === "premiere") {
-          url = "https://brflu.walk-tv.com/5922/index.m3u8?token=7ed51034a6314ff58c5a005ec393d904";
-        } else {
-          if (id === "premiere2") {
-            url = "https://brflu.walk-tv.com/5921/index.m3u8?token=7ed51034a6314ff58c5a005ec393d904";
-          } else {
-            if (id === "premiere3") {
-              url = "https://brflu.walk-tv.com/5920/index.m3u8?token=7ed51034a6314ff58c5a005ec393d904";
-            } else {
-              if (id === "premiere4") {
-                url = "https://brflu.walk-tv.com/5918/index.m3u8?token=7ed51034a6314ff58c5a005ec393d904";
-              } else {
-                if (id === "premiere5") {
-                  url = "https://brflu.walk-tv.com/5916/index.m3u8?token=7ed51034a6314ff58c5a005ec393d904";
-                } else {
-                  if (id === "sportv3") {
-                    url = "https://brflu.walk-tv.com/5930/index.m3u8?token=7ed51034a6314ff58c5a005ec393d904";
-                  } else {
-                    if (id === "starplus1") {
-                      url = "https://xn--4yyxpd9bwkc3pt40i0thra3jpmwjmpn6s6d12sl2vq7yjb88e3jg-eb5brl.bnih8hbhyn2hif0bqm8xlnwa886tsrwbpwrvg7oalg4weca5dfuhkfb51z7u2lj.foo/a2/docs/starplus1/__index.m3u8?mu3zAQc9HC3GbwJq=4UJzPtrroS40zDRkMjdOZQ&3U1G7qaTxrPbalZnEx=1710629260";
-                    } else {
-                      if (id === "starplus2") {
-                        url = "https://m3u8.bz/a2/docs/starplus2/__index.m3u8?mu3zAQc9HC3GbwJq=vZCxqlZ_chOQN4TiuVlsfg&3U1G7qaTxrPbalZnEx=1709419720";
-                      } else {
-                        if (id === "space") {
-                          url = "https://xn--4yyxpd9bwkc3pt40i0thra3jpmwjmpn6s6d12sl2vq7yjb88e3jg-eb5brl.bnih8hbhyn2hif0bqm8xlnwa886tsrwbpwrvg7oalg4weca5dfuhkfb51z7u2lj.foo/a2/docs/space/__index.m3u8?mu3zAQc9HC3GbwJq=qMDvbnqrfm1uRGZCoK7-wA&3U1G7qaTxrPbalZnEx=1711000181";
-                        } else {
-                          if (id === "tnt") {
-                            url = "https://brflu.walk-tv.com/5781/index.m3u8?token=7ed51034a6314ff58c5a005ec393d904";
-                          } else {
-                            if (id === "paramount1") {
-                              url = "https://xn--4yyxpd9bwkc3pt40i0thra3jpmwjmpn6s6d12sl2vq7yjb88e3jg-eb5brl.bnih8hbhyn2hif0bqm8xlnwa886tsrwbpwrvg7oalg4weca5dfuhkfb51z7u2lj.foo/a2/docs/paramountplus1/__index.m3u8?mu3zAQc9HC3GbwJq=rfGZ5kzeHJPiNARQQxAoYQ&3U1G7qaTxrPbalZnEx=1712128195";
-                            } else {
-                              if (id === "paramount2") {
-                                url = "https://xn--4yyxpd9bwkc3pt40i0thra3jpmwjmpn6s6d12sl2vq7yjb88e3jg-eb5brl.bnih8hbhyn2hif0bqm8xlnwa886tsrwbpwrvg7oalg4weca5dfuhkfb51z7u2lj.foo/a2/docs/paramountplus2/__index.m3u8?mu3zAQc9HC3GbwJq=rfTNQYYObtTDmt5iW9niVQ&3U1G7qaTxrPbalZnEx=1712128218";
-                              } else {
-                                if (id === "paramount2-2") {
-                                  url = "https://d35j504z0x2vu2.cloudfront.net/v1/manifest/0bc8e8376bd8417a1b6761138aa41c26c7309312/bein-sports-xtra-en-espanol/df626116-4669-421b-b2a2-f5863fd204a5/2.m3u8";
-                                } else {
-                                  if (id === "paramount3") {
-                                    url = "https://xn--4yyxpd9bwkc3pt40i0thra3jpmwjmpn6s6d12sl2vq7yjb88e3jg-eb5brl.bnih8hbhyn2hif0bqm8xlnwa886tsrwbpwrvg7oalg4weca5dfuhkfb51z7u2lj.foo/a2/docs/paramountplus3/__index.m3u8?mu3zAQc9HC3GbwJq=hXAEdBGF5pSqJh6JdyMFXg&3U1G7qaTxrPbalZnEx=1712128248";
-                                  } else {
-                                    if (id === "paramount4") {
-                                      url = "https://m3u8.bz/a2/docs/tnt/__index.m3u8?mu3zAQc9HC3GbwJq=dtovcmgCuemcy9WmMi3bPQ&3U1G7qaTxrPbalZnEx=1708316051";
-                                    } else {
-                                      if (id === "primevideo1") {
-                                        url = "https://bal02.vivartec.com.br:8088/hls/livechannel2.m3u8";
-                                      } else {
-                                        if (id === "primevideo2") {
-                                          url = "https://bal01.vivartec.com.br:8088/hls/livechannel1.m3u8";
-                                        } else {
-                                          if (id === "primevideo3") {
-                                            url = "https://bal02.vivartec.com.br:8088/hls/livechannel6.m3u8";
-                                          } else if (id === "primevideo4") {
-                                            url = "https://m3u8.bz/a2/docs/primevideo1/__index.m3u8?mu3zAQc9HC3GbwJq=lnaAZn0kqw6D6kmLOXBEoQ&3U1G7qaTxrPbalZnEx=1708485491";
+if (id == "ae")
+{
+        url = 'https://xn--4yyxpd9bwkc3pt40i0thra3jpmwjmpn6s6d12sl2vq7yjb88e3jg-eb5brl.bnih8hbhyn2hif0bqm8xlnwa886tsrwbpwrvg7oalg4weca5dfuhkfb51z7u2lj.foo/a2/docs/espn4/__index.m3u8?mu3zAQc9HC3GbwJq=Tg3M8vTKbZpN9W7yFIwynA&3U1G7qaTxrPbalZnEx=1710629229';
+}
+else if (id == "sonymovies")
+{
+        url = 'https://d1r94zrwa3gnlo.cloudfront.net/livestore103/stream/hls/1475/1475.m3u8';
+}
+else if (id == "nick")
+{
+        url = 'https://brflu.walk-tv.com/5912/index.m3u8?token=7ed51034a6314ff58c5a005ec393d904';
+}
+else if (id == "nickjr")
+{
+        url = 'https://d1r94zrwa3gnlo.cloudfront.net/livestore104/stream/hls/285/285.m3u8';
+}
+else if (id == "paramount")
+{
+        url = 'https://d1r94zrwa3gnlo.cloudfront.net/livestore103/stream/hls/289/289.m3u8';
+}
+else if (id == "sony")
+{
+        url = 'https://d1r94zrwa3gnlo.cloudfront.net/livestore102/stream/hls/279/279.m3u8';
+}
+else if (id == "mtvlives")
+{
+        url = 'https://d1r94zrwa3gnlo.cloudfront.net/livestore104/stream/hls/286/286.m3u8';
+}
+else if (id == "mtv")
+{
+        url = 'https://d1r94zrwa3gnlo.cloudfront.net/livestore103/stream/hls/287/287.m3u8';
+}
+else if (id == "lifetime")
+{
+        url = 'https://d1r94zrwa3gnlo.cloudfront.net/livestore104/stream/hls/280/280.m3u8';
+}
+else if (id == "h2")
+{
+        url = 'https://d1r94zrwa3gnlo.cloudfront.net/livestore102/stream/hls/282/282.m3u8';
+}
+else if (id == "h1")
+{
+        url = 'https://d1r94zrwa3gnlo.cloudfront.net/livestore102/stream/hls/281/281.m3u8';
+}
+else if (id == "bandnews")
+{
+        url = 'https://d1r94zrwa3gnlo.cloudfront.net/livestore102/stream/hls/276/276.m3u8';
+}
+else if (id == "bandsports")
+{
+        url = 'https://d1r94zrwa3gnlo.cloudfront.net/livestore103/stream/hls/290/290.m3u8';
+}
+else if (id == "comedycentral")
+{
+        url = 'https://d1r94zrwa3gnlo.cloudfront.net/livestore102/stream/hls/288/288.m3u8';
+}
+else if (id == "arte1")
+{
+        url = 'https://d1r94zrwa3gnlo.cloudfront.net/livestore104/stream/hls/292/292.m3u8';
+}
+else if (id == "axn")
+{
+        url = 'https://d1r94zrwa3gnlo.cloudfront.net/livestore102/stream/hls/278/278.m3u8';
+}
+else if (id == "globo")
+{
+        url = 'https://cdn.ittv.com.br/GLOBO_SP/manifest.m3u8';
+}
+else if (id == "globo")
+{
+        url = 'https://cdn.ittv.com.br/GLOBO_SP/manifest.m3u8';
+}
 
 
 var playerInstance = jwplayer("player");
@@ -147,3 +152,5 @@ playerInstance.setup({
 });
 </script>
 </body>
+
+</html>
