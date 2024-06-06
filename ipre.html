@@ -2,106 +2,54 @@
 <html lang="pt_BR">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-        }
-
-        #player {
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            height: 100%;
-            width: 100%;
-            border: 0;
-            overflow: hidden;
-        }
-    </style>
-    <meta name="referrer" content="none">
-    <link rel="stylesheet" type="text/css"
-        href="//cdn.jsdelivr.net/gh/sinalpublico/ply@main/assets/css/player-v3.1.min.css">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
-    <script src="//www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"></script>
-    <script src="//ssl.p.jwpcdn.com/player/v/8.26.0/jwpsrv.js"></script>
-    <script src="//fastly.jsdelivr.net/npm/disable-devtool@latest/disable-devtool.min.js"></script>
-    <script src="//content.jwplatform.com/libraries/KB5zFt7A.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extrair Informações do iFrame</title>
     <script>
-try {
-    document.domain = document.domain;
+        function extrairInformacoes() {
+            var iframe = document.getElementById("meuIframe");
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const channelId = urlParams.get('id');
-    const apiUrl = `https://xn----itbavbvaceiz.xn-------43dbabbcqvsac8afbfdwcoeckvkngd1frlguhaj9b.net/wtc.php?id=${channelId}`;
+            if (iframe.contentDocument) {
+                var doc = iframe.contentDocument;
 
-    if (channelId) {
-        fetch(apiUrl)
-            .then(response => response.json())
-            .then(data => {
-                const { link, licenses } = data[0];
+                // Verifica se o segundo link foi carregado dentro do iframe
+                var segundoIframe = doc.getElementById("segundoIframe");
+                if (segundoIframe && segundoIframe.contentDocument) {
+                    var segundoDoc = segundoIframe.contentDocument;
+                    var scriptContent = segundoDoc.querySelector('script:not([src])').textContent;
 
-                var playerInstance = jwplayer("player");
-                playerInstance.setup({
-                    playlist: [{
-                        title: "",
-                        sources: [{
-                            default: false,
-                            type: "dash",
-                            file: link,
-                            drm: {
-                                widevine: {
-                                    url: licenses.find(l => l.scheme === 'drm.WIDEVINE_CENC').licenseURL,
-                                },
-                                playready: {
-                                    url: licenses.find(l => l.scheme === 'drm.PLAYREADY_CENC').licenseURL,
-                                }
-                            },
-                            label: "0"
-                        }]
-                    }],
-                    width: "100%",
-                    height: "100%",
-                    cast: {},
-                    autostart: false,
-                    logo: {
-                        file: '',
-                        link: '',
-                        position: 'top-right'
-                    },
-                    sharing: {}
-                });
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Extrair Documento do Iframe</title>
-<style>
-  #iframe-container {
-    width: 100%;
-    height: 500px;
-    overflow: auto; /* Adicionado para rolagem caso o conteúdo do iframe seja maior que o contêiner */
-  }
-</style>
+                    // Extrair o link e a URL da licença Widevine do conteúdo do script no segundo iframe
+                    var linkMatch = scriptContent.match(/"file": "(.*?)"/);
+                    var link = linkMatch ? linkMatch[1] : "Não encontrado";
+
+                    var widevineURLMatch = scriptContent.match(/"url": "(.*?)"/);
+                    var widevineURL = widevineURLMatch ? widevineURLMatch[1] : "Não encontrado";
+
+                    // Exibir as informações extraídas
+                    document.getElementById("link").textContent = link;
+                    document.getElementById("scheme":"drm.WIDEVINE_CENC","licenseURL").textContent = widevineURL;
+                } else {
+                    console.log("O segundo iframe ainda não foi carregado.");
+                }
+            } else {
+                console.log("O iframe ainda não foi carregado.");
+            }
+        }
+
+        // Extrair as informações do iframe assim que o documento for carregado
+        window.onload = extrairInformacoes;
+    </script>
 </head>
+
 <body>
-<div id="iframe-container">
-  <iframe id="myIframe" src="https://reidoscanais.app/embed/player.php?l=aHR0cHM6Ly94bi0tLS1pdGJhdmJ2YWNlaXoueG4tLS0tLS0tNDNkYmFiYmNxdnNhYzhhZmJmZHdjb2Vja3ZrbmdkMWZybGd1aGFqOWIubmV0L3d0Yy5waHA/aWQ9MTU3Nw=="></iframe>
-</div>
+    <h1>Extrair Informações do iFrame</h1>
 
-<script>
-  window.onload = function() {
-    var iframe = document.getElementById('myIframe');
-    var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-    var iframeContent = iframeDocument.documentElement.innerHTML;
+    <!-- iFrame -->
+    <iframe id="meuIframe" src="https://reidoscanais.app/embed/player.php?l=aHR0cHM6Ly94bi0tLS1pdGJhdmJ2YWNlaXoueG4tLS0tLS0tNDNkYmFiYmNxdnNhYzhhZmJmZHdjb2Vja3ZrbmdkMWZybGd1aGFqOWIubmV0L3d0Yy5waHA/aWQ9MTU3Nw==" width="800" height="600" frameborder="0"></iframe>
 
-    document.getElementById('iframe-container').innerHTML = iframeContent;
-  };
-</script>
+    <!-- Elementos para exibir as informações extraídas -->
+    <p>Link: <span id="link"></span></p>
+    <p>URL da licença Widevine: <span id="scheme":"drm.WIDEVINE_CENC","licenseURL"></span></p>
 </body>
+
 </html>
