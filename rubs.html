@@ -1,330 +1,51 @@
-<!doctype html>
-<html lang="pt-BR">
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style type="text/css">
-        body {
-            margin: 0;
-            padding: 0;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verificar Links</title>
+<script>
+async function verificarLinks() {
+    const baseURL = 'https://1249-vos.dtvott.com/DASH/manifest.mpd'; // Alteração aqui
+    const maxNum = 2000;
+    const resultsContainer = document.getElementById('results');
+    
+    resultsContainer.innerHTML = ''; // Limpa os resultados anteriores
+    
+    for (let i = 1249; i <= maxNum; i++) { // Alteração aqui
+        const url = baseURL.replace('1249', pad(i, 4)); // Substitui o número
+        await verificarLink(url);
+    }
+}
 
-        .video-container {
-            position: relative;
-            width: 100%;
-            height: 0;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+async function verificarLink(url) {
+    try {
+        const response = await fetch(url);
+        if (response.ok) {
+            adicionarResultado(url, 'Funcionando');
         }
+    } catch (error) {
+        // Não faz nada se o link não funcionar
+    }
+}
 
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-    </style>
-    <meta name="referrer" content="no-referrer">
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/sinalpublico/ply@main/assets/css/player-v3.1.min.css">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
-    <script src="//content.jwplatform.com/libraries/KB5zFt7A.js"></script>
-    <script>
-        jwplayer.key = 'XSuP4qMl+9tK17QNb+4+th2Pm9AWgMO/cYH8CI0HGGr7bdjo';
-    </script>
+function adicionarResultado(url, status) {
+    const resultsContainer = document.getElementById('results');
+    const resultElement = document.createElement('div');
+    resultElement.textContent = `${url}: ${status}`;
+    resultsContainer.appendChild(resultElement);
+}
+
+function pad(num, size) {
+    let s = num + "";
+    while (s.length < size) s = "0" + s;
+    return s;
+}
+</script>
 </head>
-
 <body>
-    <div id="playersContainer"></div>
-
-    <script>
-        // Função para criar os players
-        function createPlayer(url, k, k2, playerId) {
-            if (typeof k2 !== 'undefined') {
-                const kid = k.substr(0, 32);
-                const key = k.substr(33, 65);
-                const kid2 = k2.substr(0, 32);
-                const key2 = k2.substr(33, 65);
-                var playerInstance = jwplayer(playerId);
-                playerInstance.setup({
-                    playlist: [{
-                        "sources": [{
-                            "default": false,
-                            "type": "dash",
-                            "file": url,
-                            "drm": {
-                                "clearkey": [{
-                                        "keyId": kid,
-                                        "key": key
-                                    },
-                                    {
-                                        "keyId": kid2,
-                                        "key": key2
-                                    }
-                                ]
-                            },
-                            "label": "0"
-                        }]
-                    }],
-                    width: "100%",
-                    aspectratio: "16:9",
-                    autostart: true,
-                    cast: {},
-                    sharing: false
-                });
-            } else {
-                const kid = k.substr(0, 32);
-                const key = k.substr(33, 65);
-                var playerInstance = jwplayer(playerId);
-                playerInstance.setup({
-                    playlist: [{
-                        "sources": [{
-                            "default": false,
-                            "type": "dash",
-                            "file": url,
-                            "drm": {
-                                "clearkey": [{
-                                    "keyId": kid,
-                                    "key": key
-                                }]
-                            },
-                            "label": "0"
-                        }]
-                    }],
-                    width: "100%",
-                    aspectratio: "16:9",
-                    autostart: true,
-                    cast: {},
-                    sharing: false
-                });
-            }
-        }
-
-        // Chaves de acesso
-        const keys = [
-"3823e5215eb65536b28738cb01288434:6f3d0663a95d1ec1beff9a5120cff601";
-"3ad3dca103185934acff7a0e9000c112:3f396659d841a55cd1381e6735ecfa1d";
-"0dbc422a1181541aaedcb15b97870ad9:92425dc7dc8a9f090d8fe9f33ed68d45";
-"c55c7630ed36518c81ac30833e37839c:2623c318c827f110b0799c39ce6feedd";
-"fe1d448746445b0dad008ffc96659be1:2ea732e3e3c1e4c944973ce9ea924292";
-"8798ecd6c86b3e81815d8d88987608a5:e04f14bc3943e28a4830d3b6bcc7c87f";
-"4aaaeedd273c3483b40d298c0a4099fd:2bf034669ce76fd0c25905fc985c0041";
-"0a10d5ef8eea3b189767f24ea477dd2c:60b3f2c22ca15274c78636aea24d24cb";
-"32a2a478899c5b04984f7dd6a10245c5:ba513bd605ae3cb5a6ebb5acf1b3a143";
-"af932b2408f6572eb049a5df265e3db7:c844e50999fda1b3cf35031dc1adc155";
-"d716974633523163a90912f20d40a50b:2e2945824b82c72bef9dc21c9f004784";
-"49b986d0d689578a91a1fd34c24716d8:8e50099d193a419f1e9e0fea82f0869b";
-"93a0426821f230ef87841f1797a29c8a:17d875810748d84558792c7c2d844cc2";
-"08909ad93ca55ecd952e5876a5a9ff81:323db613ff99a6e6a2a77ac76f9c94c1";
-"afd242577429345781bf2aaf6bf04bfe:7fe4bbfe4ee0c0850d7c19517bba304c";
-"b595cb3b456b5c84ac2b2df5cdae744a:121caa501bcc4ccc175e195e5c8d5f54";
-"fb36a62cdccc55d08c34515d1ca374a4:5b2e7d5124a474fb59423a909c4c8db5";
-"ad25b35547e453db95a517be74a81fcf:3b9d13a9b20eaac3ab0fe5aef76db57c";
-"ffb68fdce2953c4c969868abc1c6475c:992fcec51433b97d4158fd18495c59d0";
-"cb4e8fa4052c3fa9ad44c3ddd3c7bb79:ef5ca043222c3911e0f7d00207b0d44a";
-"04c20717a7855094b5b32102430c7806:1eb521b5c48879ca4a22971bce5a2c73";
-"afcd9ff167d035408ab3cdf17cd49164:eb05df66be857c66221481fd2d5ee858";
-"efca94287524339da46b4020e252fa04:b2a275490f13ae319d3cb9f3cdfcd76f";
-"0b47d5dd35853338be6b9d6c6f1f1684:534fa44897ede9c5b74009abfaa50773";
-"2c232d270ee83a5eb445c6ef20cf5b99:c4b76b61ab7107030c6cac4008e3d5bd";
-"db1f45f2c7eb3229a72fccd82b60a6f7:4e2070595da16f87e6e6459a26be34d6";
-"0443323f4f853b8790d0eb059b24a977:1d33e119588df09dec758d278b7b8c35";
-"1a11fb8f7abb5d62b8aa56cb568bc2b2:8b54795438638690f18375bf596a1be1";
-"de361f44883f315683cbd3c85d44bb42:043abec327e9d73ae85aa6253ed944cc";
-"d12dcc06a2873534a91303dd6a4ee884:9a4dfec9f0532d3141f702bd571907a2";
-"53a1a09144e437668072924475d1aa45:84f754ea199372f659e15fccfeeb03e2";
-"3f87291737a751c7bd45520c89ac45e8:6334228740799dbbfa71ab9817102cda";
-"81baa6d7530b3668913b88a6a7e6bdb9:90ef8f258696885e55519b84e28861af";
-"0009b919b64f37eba599b3e47435f4ac:fe63a5aa52607953425f4f821487a5f6";
-"3dcdd2a52c655ae1837042b060f0e3d0:bec353cbe2f1fe452d27fbd7f1aa53c7";
-"f9e7907bb71238a082f19410d4e480d1:959aa47fea38f91d101f22d4819325b6";
-"63c73777fefa35a9b89d0bb0fd82dd40:c735b21827dde8835e859dd2df0158d2";
-"405804998cc959c98362b56166f6454e:bc4dc42c864d1c9a6e90a2d07173661b";
-"f86b933327103aa38f16db9e85d40cc4:21b0198f7080c114dfb5922342a9f33c";
-"ebe4cc32ca0536b8bfeae0701deff86a:0398182889e2fd2359bc5299d416bb8c";
-"2b26a5dab1c031ab90f779c00a02ecf7:4c5c5ef767fdec4a5cb42f356b90575a";
-"48f8d5a4e0f23f5fb433514b7dc3ad7d:76bcde7551bf4c05a1eef04a1b017eee";
-"fa9146622c413fa58cec859b17ef680c:a1215f87140f930a9aed5a3d12a114f3";
-"07113072d3bb3b6da600f70368784848:d92ab59bde2b10104ec122e1888287c5";
-"2601361b298135bdbf5f40e5f41878d0:158d4432064fa3893ba0bbc29ee6a95d";
-"f1d9e5c000353365b47c10569bb9014b:5f69ec82314b8336732f1b577a234956";
-"a596b87acbcc5bdf8fb1a35abed83b86:26541863f19f6448706335f840801313";
-"a4b434ca422454138d01defe65b17257:b4b5228c2887e2d3646893b8690ac587";
-"5ade751266b25ceb84f408b12dd52e9d:673c2750e424bd3cfe3bcc4692afd9fc";
-"d2ddc6d32fd15621abe015b83a80a6f8:86413f084bd7cf306b46559a733efa9f";
-"a34d85a7cc2457e8a5746d57a6a5ffd4:142b59ad73cd42a2f236e9a7ee5c398a";
-"5fcfd3117f6c39cfb75f507ea45cf150:564ba92660a59472dbe353dec6e2df1f";
-"6672e54d0e90531883da131929ea47ad:dc2596a9fcb172448bf884692450c831";
-"cd28d768659c5d8092d8b8260c45cf07:98f67df4d550de6958c6f857015c1000";
-"3190bd4ce11356dfa654b03f5848e20d:43ae04db527d3ae8e410c15a23d339ee";
-"f5f1e9c443ab568980dd16b246a81764:f13e6fefe6ca2b9ae8597ffd7e62eb90";
-"9fc09333ecd6540483702523e2a8bd22:3f0607052bc2f932de40d6d2887d2025";
-"884c84a3ef8d5921a294df585cb7102e:cb846d65ce9907c2e6952b90229073ed";
-"ac6fab13d32c5c52bb7794f6bc686c14:bca0ed0c3b6d68aadc97bf328c766516";
-"c968e196dc203666b093aefe20320bee:dc24e3ea117deb906358bd427aef3a8c";
-"84ccdd14d6335a09bc4541e485a56fb7:77f5a776272a0301758023fd6257e820";
-"19cb94db24785430a263f9696fa3eae3:2fa8b79006f1e6fff2a938b5f6d64df3";
-"843e14c610605ca285b0f1a90b36a5e6:ee36acf3f0a019a916406082fc4216d8";
-"502a9cb6bebc331596b0695e5050032a:42ec1cb990e01d32ad86807d80fd2f09";
-"2b8d6057ac5d59199e853d024eb4f176:fe621a6ad79fec7bfcb78bef78260f49";
-"4de4f830d10e5688837d4ce27787539f:4502f8f9bf5172323d5b170303e1f63b";
-"09fab1062e9355a59fd449a4d76614e5:42c2ec0f3366d6e76f89fb730cf83b2c";
-"300bba76f7375d9bbd709f21117743d4:ae7a589a2b7a79280939c000f2a4bc2c";
-"7685b7e26da7cdd166f53216783de078:89b8a2d4e233a8831693615fe0d03509";
-"7685b7e26da7cdd166f53216783de078:89b8a2d4e233a8831693615fe0d03509";
-"8b9fc39df1bd5696a1c6c46cae883567:e55a026ce7ee53babc0646c68bbafd77";
-"c83585e34ba952de968732bb873bd6e8:ee105303a7d7d2baec82b3605a700b45";
-"99a1f64f3c6e5176bd18538594355c2f:3b4100ebbae080f2e3a638452b8a3d24";
-"9148886de408525ea3ac58e8b7fa0a24:0842c9ce70af833b6d9d0a0f56e2ac4f";
-"ee227d3abd6e54c9b94eb8527900a634:1a3dcd4f84410b51b861b5ec99c991d4";
-"87e6f27bf5045e29981293c817dd96f4:9ccbe00ed8818ce9cd3f5efb6d5cf2c0";
-"5bf883b838313824beae3a3e0402b28a:f568e5a00fe7f3f2089a017e214b03cc";
-"2d53d416f41c3fe0be013a6673011cd5:cd9e80c6a4ca125f876c60c84c82aff6";
-"16a83a9ac18f5a1abba01b024975a405:d203be425b408a53b9e03dfdb399989c";
-"64190f7a981d5a6c836c6461599cb6cc:377f0c547548272ae6fee5156cc76f35";
-"792b5c91fdfd5c30af28128b309ab220:2cb385f7d83c06af0fca23ca44fb653c";
-"20054c12719b569ca749d59e2f477254:eb2f4d43e582be8e047127ae38eca6b4";
-"48b27a08d6ee319f907abf728378ddca:3d0b51db995f17c287c7df00329c2edf";
-"bd1af42db82f5a17a0d75246f25f5201:a9edd4e2c410923e9cbcb261102e5008";
-"d00f407f39395bc1b3718683c31e5837:80188a26136ec57dd6732d380aeb14ce";
-"ccb2a4348ba157b0a2b4d1b615edec0c:16ea8ff64c2f00c26c4d83c87a2ae250";
-"f9ccf9b528a9709312deab7ead883857:06b932ea52ea21cfb5c5b7f9430efe71";
-"df01104845985b04b0d140b9efa58dcc:cc26cdbfb041f5532cf69fa4fb876115";
-"0206b0b260e339b28a23162666d9b920:643ccba9971f746402300463786137d0";
-"1e4d1348f35d5605bcd11cb9db919e9d:2ad9e062e4ec97dd996a32df285efe62";
-"ff0bdee8457e5fdd9cbe92f06ea21f3c:dad1b98bf1dd14147cfdc885e8886314";
-"278cb23e34505011a7cbcb2cedad35ef:05e25c703b8cc9f6289bf439d2349011";
-"f3da760ccf503f6b92a2cae91b324c0f:8cc9d040457f46feb8426f4a34462ef7";
-"cb870d8b6d175f4daa8d4dda149ef91a:bd1963dfa9e3b9daf7e66e250c0a7070";
-"67370630f3005b0ba816179920ecfd12:731242ad6bded77405fbe065ac6db40b";
-"041c7c06a01353978474e99e0ceb6495:0f8ac510b9041b2f85f8052d5e44d4cd";
-"639d63c9fe6e5170b57f0ebbca051624:25ca21fee1482e7862a8d60446c4882c";
-"0ed326c0eb67574eb47c6bbc819721ad:f35e7d0280b2541ef9c5f5c89c7b9680";
-"76a51352f9295da0a0df4085c784b972:87ed956c0b04ceea6582d7f1c8138055";
-"eb6caa15212159b985d450e2957d0234:de03bb522b09b0d7371e6d754f82306b";
-"91d7d9099b1b5a959d3e0b86defc1645:f64a24b9f6b4e0d7870daaaa7c897e47";
-"e3cbe37d8b2a5f30bcfc6f883982338f:72cff4bc214b94b88c139977fb4fbf4f";
-"d98239180d8380b3a1bb28d875b1ddf2:cf836ced579257d1c76ae8809818e6c4";
-"fd2e8019f37211ca8b78a8b656f1b83a:273189c214e85b43ac36298d1c422330";
-"8f492be58fd03634ad813b5accd568e5:feb149d1ba340d1a9ac2ba6a512c8e03";
-"ce5d18ffd68650affce1985201983ab7:397c64e42507d95e5460830918c22a98";
-"d5a3ac0b892bfccdf352b6def9cb2764:ac0936acc0036fad2273efaa42b1fafd";
-"05cedc366ce4ec735ee4b33fcefbf01f:475d6dd40eaba6896e02b26a6cf34d95";
-"7ce96e01eee54fb77e5cc4e7b753d6b0:184f94303d3357b9a7381ccdeee9b611";
-"7ba384f9d983c731ab1e3702c16e2faf:f28adca4375e8a041fd22aef26440009";
-"3930d9804f7659279e02d3fa99d91821:e1ee63d8c366874142afce8017938be8";
-"3a6de453454c5d84931831ac2a711210:0d6eec46f9f27c13ebd0c7aa1ab2496c";
-"1daca448453d50b1b00df530643c3792:29bf2ffca33af447e9a491e4f2539e0d";
-"d0652911b7015750aa0571fc60d8d875:c7df0df985acec752fa4ddb434e2c1a2";
-"e1423e7eb3a35baf9c02d96fc02572fc:b090accb06bde78219e9e16b304b9271";
-"5565fe9480845c5f865dfaca3ebbb220:93e85417a3629bbfb88bbe0b109b2c41";
-"bd1abb3a87493b1c9038976d326732af:31672fb84bd15aadc1c81c538bfb46c3";
-"bf6855877dc33b608b59e62dd77ef5ba:920007aa5ce8ee880fb6e44237b8921b";
-"ebd165cac86f3085bf2d4b9034306290:1e96bbc7e71322e8081575da069aa880";
-"bd8023c1b80231548a63209ab3159b11:1042162ed883156a37ecbca29c78eda2";
-"2316e0cdd826368c8106475cb8bf8763:01d9ea55d9e3f97e29e7ffe541a438fe";
-"18b78953a4933986a6bec58e88ae618b:4dad4b04638e941ffaa7d28b2ccb380e";
-"dd8d1bf85e0ee9641b912f593c4c73ae:0730dd5874ea7b0cd59b79a3c62e92d3";
-"808a179178a41aa73cc0d588821aa1f2:96fb8a55be4ce0d4b9cf5a61e290ee21";
-"8c4f33c99e54544088b6668a045d9aba:e3cd3338afb0da9afc8dfb89082419de";
-"90184f5ff1b95e97896094c083717d56:40934400b8cc1850d630a2cea6470820";
-"a85824c8493b52eba3e45cb2ca9ccef8:e4f38757ced0cdd7537d9bfb91d0061e";
-"533de0c3a6fd523bbcdd1d450ef0ed21:b5a645df77c37e24ae3fc40231472770";
-"d7ce26d4c11c5cbfb7112c158a51c355:4df1f5e3d20c6d6f8661080a084930c2";
-"b3b4d4724638592688df0d639c8a83fa:88e57db1bcebff6d3a5e514a4f8fd698";
-"c846005984b55637aee7973936aa34f9:4b87120d05e2f3c037bc22438db6bc54";
-"8fad32ba2f5e5f7cb53bdf380c987505:15a9a7f30424e1f5a27d7d2c2b2abf01";
-"99c65265c91752099061fc6cd13aec12:e00b78c1a170dafdce62ab2b9015b585";
-"b951b7c50f3888e6e829ac8a07a49b68:30d92c389049d23cff58eed7d8fff532";
-"15cfbbb662db5386b24b3a3fe60edf06:5ac59106239043f5ff819d1f8c99f0c8";
-"0d2cd7e6564e3f7a8813405e9a38035a:abb65804e658ab88b6e00df8ffa6392a";
-"4477ef6ae51b43f18804fcc8ba7268de:529a964da306bc56e53d6bdb2d008830";
-"7e0ad68b9be956a998c14fa07ea9f817:9c71179c05144025210965fc9b27003a";
-            // Adicione todas as suas chaves aqui
-        ];
-
-        // Links dos vídeos
-        const videoLinks = [
-"https://0003-vos.dtvott.com/DASH/manifest.mpd",
-"https://0015-vos.dtvott.com/DASH/manifest.mpd",
-"https://0059-vos.dtvott.com/DASH/manifest.mpd",
-"https://0063-vos.dtvott.com/DASH/manifest.mpd",
-"https://0103-vos.dtvott.com/DASH/manifest.mpd",
-"https://0104-vos.dtvott.com/DASH/manifest.mpd",
-"https://0107-vos.dtvott.com/DASH/manifest.mpd",
-"https://0108-vos.dtvott.com/DASH/manifest.mpd",
-"https://0119-vos.dtvott.com/DASH/manifest.mpd",
-"https://0120-vos.dtvott.com/DASH/manifest.mpd",
-"https://0121-vos.dtvott.com/DASH/manifest.mpd",
-"https://0122-vos.dtvott.com/DASH/manifest.mpd",
-"https://0123-vos.dtvott.com/DASH/manifest.mpd",
-"https://0124-vos.dtvott.com/DASH/manifest.mpd",
-"https://0138-vos.dtvott.com/DASH/manifest.mpd",
-"https://0139-vos.dtvott.com/DASH/manifest.mpd",
-"https://0140-vos.dtvott.com/DASH/manifest.mpd",
-"https://0141-vos.dtvott.com/DASH/manifest.mpd",
-"https://0142-vos.dtvott.com/DASH/manifest.mpd",
-"https://0143-vos.dtvott.com/DASH/manifest.mpd",
-"https://0144-vos.dtvott.com/DASH/manifest.mpd",
-"https://0145-vos.dtvott.com/DASH/manifest.mpd",
-"https://0146-vos.dtvott.com/DASH/manifest.mpd",
-"https://0147-vos.dtvott.com/DASH/manifest.mpd",
-"https://0148-vos.dtvott.com/DASH/manifest.mpd",
-"https://0149-vos.dtvott.com/DASH/manifest.mpd",
-"https://0150-vos.dtvott.com/DASH/manifest.mpd",
-"https://0151-vos.dtvott.com/DASH/manifest.mpd",
-"https://0152-vos.dtvott.com/DASH/manifest.mpd",
-"https://0153-vos.dtvott.com/DASH/manifest.mpd",
-"https://0154-vos.dtvott.com/DASH/manifest.mpd",
-"https://0155-vos.dtvott.com/DASH/manifest.mpd",
-"https://0156-vos.dtvott.com/DASH/manifest.mpd",
-"https://0157-vos.dtvott.com/DASH/manifest.mpd",
-"https://1003-vos.dtvott.com/DASH/manifest.mpd",
-"https://1007-vos.dtvott.com/DASH/manifest.mpd",
-"https://1008-vos.dtvott.com/DASH/manifest.mpd",
-"https://1011-vos.dtvott.com/DASH/manifest.mpd",
-"https://1014-vos.dtvott.com/DASH/manifest.mpd",
-"https://1016-vos.dtvott.com/DASH/manifest.mpd",
-"https://1017-vos.dtvott.com/DASH/manifest.mpd",
-"https://1019-vos.dtvott.com/DASH/manifest.mpd",
-"https://1030-vos.dtvott.com/DASH/manifest.mpd",
-"https://1034-vos.dtvott.com/DASH/manifest.mpd",
-"https://1044-vos.dtvott.com/DASH/manifest.mpd",
-"https://1046-vos.dtvott.com/DASH/manifest.mpd",
-"https://1157-vos.dtvott.com/DASH/manifest.mpd",
-"https://1162-vos.dtvott.com/DASH/manifest.mpd",
-"https://1163-vos.dtvott.com/DASH/manifest.mpd",
-"https://1173-vos.dtvott.com/DASH/manifest.mpd",
-"https://1174-vos.dtvott.com/DASH/manifest.mpd",
-"https://1180-vos.dtvott.com/DASH/manifest.mpd",
-"https://1182-vos.dtvott.com/DASH/manifest.mpd",
-"https://1187-vos.dtvott.com/DASH/manifest.mpd",
-"https://1192-vos.dtvott.com/DASH/manifest.mpd",
-"https://1193-vos.dtvott.com/DASH/manifest.mpd",
-"https://1198-vos.dtvott.com/DASH/manifest.mpd",
-"https://1210-vos.dtvott.com/DASH/manifest.mpd",
-"https://1214-vos.dtvott.com/DASH/manifest.mpd",
-"https://1222-vos.dtvott.com/DASH/manifest.mpd",
-"https://1227-vos.dtvott.com/DASH/manifest.mpd",
-"https://1237-vos.dtvott.com/DASH/manifest.mpd",
-"https://1242-vos.dtvott.com/DASH/manifest.mpd",
-"https://1249-vos.dtvott.com/DASH/manifest.mpd",
-            // Adicione todos os links dos vídeos aqui
-        ];
-
-        // Container para os players
-        var playersContainer = document.getElementById('playersContainer');
-
-        // Loop para criar os players
-        for (var i = 0; i < 600; i++) {
-            var playerDiv = document.createElement('div');
-            playerDiv.className = 'video-container';
-            playerDiv.innerHTML = '<iframe id="player' + i + '" allowfullscreen frameborder="0" scrolling="no"></iframe>';
-            playersContainer.appendChild(playerDiv);
-
-            createPlayer(videoLinks[i % videoLinks.length], keys[i % keys.length], keys[(i + 1) % keys.length], 'player' + i);
-        }
-    </script>
+<h1>Verificar Links</h1>
+<button onclick="verificarLinks()">Verificar</button>
+<div id="results"></div>
 </body>
-
 </html>
