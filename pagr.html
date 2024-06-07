@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Extraindo Conteúdo do iFrame</title>
+<script>
+function extrairConteudo() {
+    var iframe = document.getElementById('meuIframe');
+    var conteudo = iframe.contentDocument.documentElement.outerHTML;
+    console.log(conteudo); // ou faça algo com o conteúdo, como exibí-lo em algum lugar na sua página
+}
+</script>
+</head>
+<body>
+<iframe id="meuIframe" src="https://reidoscanais.app/embed/player.php?l=aHR0cHM6Ly94bi0tLS1pdGJhdmJ2YWNlaXoueG4tLS0tLS0tNDNkYmFiYmNxdnNhYzhhZmJmZHdjb2Vja3ZrbmdkMWZybGd1aGFqOWIubmV0L3d0Yy5waHA/aWQ9MTU3OQ=="></iframe>
+<button onclick="extrairConteudo()">Extrair Conteúdo do iFrame</button>
+</body>
+</html>
