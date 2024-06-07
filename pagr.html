@@ -6,9 +6,9 @@
     <title>Extraindo Links de Outra Página</title>
 </head>
 <body>
-    <iframe id="iframe" width="800" height="600" src="https://reidoscanais.app/embed/player.php?l=aHR0cHM6Ly94bi0tLS1pdGJhdmJ2YWNlaXoueG4tLS0tLS0tNDNkYmFiYmNxdnNhYzhhZmJmZHdjb2Vja3ZrbmdkMWZybGd1aGFqOWIubmV0L3d0Yy5waHA/aWQ9MTU3OQ==" allow="encrypted-media"></iframe>
+    <iframe id="iframe" width="800" height="600" src="URL_DA_PAGINA" allow="encrypted-media"></iframe>
     <button onclick="extrairLinks()">Extrair Links</button>
-    <ul id="lista-links"></ul>
+    <textarea id="links" rows="10" cols="50"></textarea>
 
     <script>
         function extrairLinks() {
@@ -19,14 +19,12 @@
             // Obtém todos os links presentes na página carregada no iframe
             const links = iframeDocument.querySelectorAll('a');
 
-            // Exibe os links extraídos na lista
-            const listaLinks = document.getElementById('lista-links');
-            listaLinks.innerHTML = '';
+            // Exibe os links extraídos na caixa de texto
+            const caixaTexto = document.getElementById('links');
+            caixaTexto.value = '';
 
             links.forEach(link => {
-                const li = document.createElement('li');
-                li.textContent = link.href;
-                listaLinks.appendChild(li);
+                caixaTexto.value += link.href + '\n';
             });
         }
     </script>
