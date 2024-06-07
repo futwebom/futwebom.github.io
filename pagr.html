@@ -6,28 +6,21 @@
     <title>Extraindo Conteúdo de Outra Página</title>
 </head>
 <body>
+    <iframe id="iframe" width="800" height="600" src="https://reidoscanais.app/embed/player.php?l=aHR0cHM6Ly94bi0tLS1pdGJhdmJ2YWNlaXoueG4tLS0tLS0tNDNkYmFiYmNxdnNhYzhhZmJmZHdjb2Vja3ZrbmdkMWZybGd1aGFqOWIubmV0L3d0Yy5waHA/aWQ9MTU3OQ==" allow="encrypted-media"></iframe>
     <button onclick="extrairConteudo()">Extrair Conteúdo</button>
     <textarea id="conteudo" rows="10" cols="50"></textarea>
 
     <script>
         function extrairConteudo() {
-            // Faça uma requisição para a página desejada
-            fetch('https://reidoscanais.app/embed/player.php?l=aHR0cHM6Ly94bi0tLS1pdGJhdmJ2YWNlaXoueG4tLS0tLS0tNDNkYmFiYmNxdnNhYzhhZmJmZHdjb2Vja3ZrbmdkMWZybGd1aGFqOWIubmV0L3d0Yy5waHA/aWQ9MTU3OQ==')
-            .then(response => response.text()) // Extrai o conteúdo como texto
-            .then(html => {
-                // Crie um elemento temporário para inserir o conteúdo
-                const tempElement = document.createElement('div');
-                tempElement.innerHTML = html;
+            // Acessa o conteúdo do iframe
+            const iframe = document.getElementById('iframe');
+            const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
 
-                // Extraia o conteúdo desejado
-                const conteudoExtraido = tempElement.querySelector('SELETOR_DO_CONTEUDO').innerHTML;
+            // Obtém o conteúdo do iframe
+            const conteudoExtraido = iframeDocument.body.innerHTML;
 
-                // Exiba o conteúdo extraído na caixa de texto
-                document.getElementById('conteudo').value = conteudoExtraido;
-            })
-            .catch(error => {
-                console.error('Erro ao extrair conteúdo:', error);
-            });
+            // Exibe o conteúdo extraído na caixa de texto
+            document.getElementById('conteudo').value = conteudoExtraido;
         }
     </script>
 </body>
