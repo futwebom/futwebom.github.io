@@ -3,29 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Extraindo Links de Outra Página</title>
+    <title>Iframe Content Extractor</title>
 </head>
 <body>
-    <iframe id="iframe" width="800" height="600" https://reidoscanais.app/embed/player.php?l=aHR0cHM6Ly94bi0tLS1pdGJhdmJ2YWNlaXoueG4tLS0tLS0tNDNkYmFiYmNxdnNhYzhhZmJmZHdjb2Vja3ZrbmdkMWZybGd1aGFqOWIubmV0L3d0Yy5waHA/aWQ9MTU3OQ==" allow="encrypted-media"></iframe>
-    <button onclick="extrairLinks()">Extrair Links</button>
-    <textarea id="links" rows="10" cols="50"></textarea>
+    <iframe id="myFrame" src="https://reidoscanais.app/embed/player.php?l=aHR0cHM6Ly94bi0tLS1pdGJhdmJ2YWNlaXoueG4tLS0tLS0tNDNkYmFiYmNxdnNhYzhhZmJmZHdjb2Vja3ZrbmdkMWZybGd1aGFqOWIubmV0L3d0Yy5waHA/aWQ9MTU3OQ==" allow="encrypted-media"></iframe>
+    <button onclick="extractContent()">Extract Content</button>
+    <div id="output" style="border: 1px solid black; padding: 10px; margin-top: 10px;"></div>
 
     <script>
-        function extrairLinks() {
-            // Acessa o conteúdo do iframe
-            const iframe = document.getElementById('iframe');
-            const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-
-            // Obtém todos os links presentes na página carregada no iframe
-            const links = iframeDocument.querySelectorAll('a');
-
-            // Exibe os links extraídos na caixa de texto
-            const caixaTexto = document.getElementById('links');
-            caixaTexto.value = '';
-
-            links.forEach(link => {
-                caixaTexto.value += link.href + '\n';
-            });
+        function extractContent() {
+            var iframe = document.getElementById('myFrame');
+            var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+            var iframeContent = iframeDocument.body.innerHTML;
+            document.getElementById('output').innerHTML = "<pre>" + iframeContent + "</pre>";
         }
     </script>
 </body>
