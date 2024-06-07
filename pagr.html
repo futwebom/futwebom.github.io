@@ -1,22 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iframe Content Extractor</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reproduzir vídeo do YouTube</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    #container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+    iframe {
+        width: 80%;
+        height: 60%;
+        border: none;
+    }
+    #videoUrl {
+        margin-top: 20px;
+        width: 80%;
+        padding: 10px;
+        font-size: 16px;
+    }
+    #playButton {
+        margin-top: 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+    }
+</style>
 </head>
 <body>
-    <iframe id="myFrame" src="https://reidoscanais.app/embed/player.php?l=aHR0cHM6Ly94bi0tLS1pdGJhdmJ2YWNlaXoueG4tLS0tLS0tNDNkYmFiYmNxdnNhYzhhZmJmZHdjb2Vja3ZrbmdkMWZybGd1aGFqOWIubmV0L3d0Yy5waHA/aWQ9MTU3OQ==" allow="encrypted-media"></iframe>
-    <button onclick="extractContent()">Extract Content</button>
-    <div id="output" style="border: 1px solid black; padding: 10px; margin-top: 10px;"></div>
 
-    <script>
-        function extractContent() {
-            var iframe = document.getElementById('myFrame');
-            var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-            var iframeContent = iframeDocument.body.innerHTML;
-            document.getElementById('output').innerHTML = "<pre>" + iframeContent + "</pre>";
+<div id="container">
+    <iframe id="videoPlayer" allowfullscreen></iframe>
+    <input type="text" id="videoUrl" placeholder="Cole o URL do vídeo do YouTube aqui">
+    <button id="playButton">Reproduzir</button>
+</div>
+
+<script>
+    const playButton = document.getElementById('playButton');
+    const videoUrlInput = document.getElementById('videoUrl');
+    const videoPlayer = document.getElementById('videoPlayer');
+
+    playButton.addEventListener('click', () => {
+        const videoUrl = videoUrlInput.value;
+        if (videoUrl) {
+            const videoId = videoUrl.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+            if (videoId) {
+                const embedUrl = `https://www.youtube.com/embed/${videoId[1]}`;
+                videoPlayer.src = embedUrl;
+            } else {
+                alert('Por favor, insira um URL válido do YouTube.');
+            }
+        } else {
+            alert('Por favor, insira um URL do YouTube.');
         }
-    </script>
+    });
+</script>
+
 </body>
 </html>
