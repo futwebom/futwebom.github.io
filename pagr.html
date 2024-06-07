@@ -1,26 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Iframe Page Capture</title>
-<script>
-window.onload = function() {
-  var iframe = document.getElementById('myIframe');
-  var outputBox = document.getElementById('outputBox');
-  
-  iframe.contentWindow.addEventListener('DOMContentLoaded', function(event) {
-    var openedPageURL = event.target.location.href;
-    console.log('Página aberta dentro do iframe:', openedPageURL);
-    outputBox.value += openedPageURL + '\n';
-  });
-};
-</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extraindo Conteúdo de Outra Página</title>
 </head>
 <body>
+    <button onclick="extrairConteudo()">Extrair Conteúdo</button>
+    <textarea id="conteudo" rows="10" cols="50"></textarea>
 
-<iframe id="myIframe" src="https://reidoscanais.app/embed/player.php?l=aHR0cHM6Ly94bi0tLS1pdGJhdmJ2YWNlaXoueG4tLS0tLS0tNDNkYmFiYmNxdnNhYzhhZmJmZHdjb2Vja3ZrbmdkMWZybGd1aGFqOWIubmV0L3d0Yy5waHA/aWQ9MTU3OQ=="></iframe>
-<textarea id="outputBox" rows="10" cols="50" readonly></textarea>
+    <script>
+        function extrairConteudo() {
+            // Faça uma requisição para a página desejada
+            fetch('https://reidoscanais.app/embed/player.php?l=aHR0cHM6Ly94bi0tLS1pdGJhdmJ2YWNlaXoueG4tLS0tLS0tNDNkYmFiYmNxdnNhYzhhZmJmZHdjb2Vja3ZrbmdkMWZybGd1aGFqOWIubmV0L3d0Yy5waHA/aWQ9MTU3OQ==')
+            .then(response => response.text()) // Extrai o conteúdo como texto
+            .then(html => {
+                // Crie um elemento temporário para inserir o conteúdo
+                const tempElement = document.createElement('div');
+                tempElement.innerHTML = html;
 
+                // Extraia o conteúdo desejado
+                const conteudoExtraido = tempElement.querySelector('SELETOR_DO_CONTEUDO').innerHTML;
+
+                // Exiba o conteúdo extraído na caixa de texto
+                document.getElementById('conteudo').value = conteudoExtraido;
+            })
+            .catch(error => {
+                console.error('Erro ao extrair conteúdo:', error);
+            });
+        }
+    </script>
 </body>
 </html>
