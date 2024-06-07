@@ -1,19 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Extraindo Conteúdo do iFrame</title>
-<script>
-function extrairConteudo() {
-    var iframe = document.getElementById('meuIframe');
-    var conteudo = iframe.contentDocument.documentElement.outerHTML;
-    console.log(conteudo); // ou faça algo com o conteúdo, como exibí-lo em algum lugar na sua página
-}
-</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extraindo conteúdo de um iframe</title>
 </head>
 <body>
-<iframe id="meuIframe" src="https://reidoscanais.app/embed/player.php?l=aHR0cHM6Ly94bi0tLS1pdGJhdmJ2YWNlaXoueG4tLS0tLS0tNDNkYmFiYmNxdnNhYzhhZmJmZHdjb2Vja3ZrbmdkMWZybGd1aGFqOWIubmV0L3d0Yy5waHA/aWQ9MTU3OQ=="></iframe>
-<button onclick="extrairConteudo()">Extrair Conteúdo do iFrame</button>
+    <iframe id="myFrame" src="https://reidoscanais.app/embed/player.php?l=aHR0cHM6Ly94bi0tLS1pdGJhdmJ2YWNlaXoueG4tLS0tLS0tNDNkYmFiYmNxdnNhYzhhZmJmZHdjb2Vja3ZrbmdkMWZybGd1aGFqOWIubmV0L3d0Yy5waHA/aWQ9MTU3OQ=="></iframe>
+
+    <pre id="extractedContent"></pre>
+
+    <script>
+        window.onload = function() {
+            var iframe = document.getElementById('myFrame');
+            var extractedContent = document.getElementById('extractedContent');
+
+            // Espera o iframe carregar completamente
+            iframe.onload = function() {
+                // Acessa o documento dentro do iframe
+                var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+                
+                // Extrai o conteúdo dentro da tag <pre> do documento do iframe
+                var content = iframeDocument.querySelector('pre').textContent;
+                
+                // Exibe o conteúdo extraído na página
+                extractedContent.textContent = content;
+            };
+        };
+    </script>
 </body>
 </html>
