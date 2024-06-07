@@ -3,28 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Extraindo conteúdo de um iframe</title>
+    <title>Extraindo conteúdo e estilo de um iframe</title>
 </head>
 <body>
     <iframe id="myFrame" src="https://reidoscanais.app/embed/player.php?l=aHR0cHM6Ly94bi0tLS1pdGJhdmJ2YWNlaXoueG4tLS0tLS0tNDNkYmFiYmNxdnNhYzhhZmJmZHdjb2Vja3ZrbmdkMWZybGd1aGFqOWIubmV0L3d0Yy5waHA/aWQ9MTU3OQ=="></iframe>
 
-    <pre id="extractedContent"></pre>
+    <div id="extractedContent"></div>
+
+    <style id="extractedStyle"></style>
 
     <script>
         window.onload = function() {
             var iframe = document.getElementById('myFrame');
             var extractedContent = document.getElementById('extractedContent');
+            var extractedStyle = document.getElementById('extractedStyle');
 
             // Espera o iframe carregar completamente
             iframe.onload = function() {
                 // Acessa o documento dentro do iframe
                 var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-                
+
                 // Extrai o conteúdo dentro da tag <pre> do documento do iframe
                 var content = iframeDocument.querySelector('pre').textContent;
                 
+                // Extrai o estilo CSS do documento do iframe
+                var styleSheets = iframeDocument.styleSheets;
+                var extractedCSS = '';
+                for (var i = 0; i < styleSheets.length; i++) {
+                    var cssRules = styleSheets[i].cssRules;
+                    for (var j = 0; j < cssRules.length; j++) {
+                        extractedCSS += cssRules[j].cssText + '\n';
+                    }
+                }
+
                 // Exibe o conteúdo extraído na página
-                extractedContent.textContent = content;
+                extractedContent.innerHTML = '<pre>' + content + '</pre>';
+                extractedStyle.textContent = extractedCSS;
             };
         };
     </script>
