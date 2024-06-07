@@ -3,24 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Extraindo Conteúdo de Outra Página</title>
+    <title>Extraindo Links de Outra Página</title>
 </head>
 <body>
     <iframe id="iframe" width="800" height="600" src="https://reidoscanais.app/embed/player.php?l=aHR0cHM6Ly94bi0tLS1pdGJhdmJ2YWNlaXoueG4tLS0tLS0tNDNkYmFiYmNxdnNhYzhhZmJmZHdjb2Vja3ZrbmdkMWZybGd1aGFqOWIubmV0L3d0Yy5waHA/aWQ9MTU3OQ==" allow="encrypted-media"></iframe>
-    <button onclick="extrairConteudo()">Extrair Conteúdo</button>
-    <textarea id="conteudo" rows="10" cols="50"></textarea>
+    <button onclick="extrairLinks()">Extrair Links</button>
+    <ul id="lista-links"></ul>
 
     <script>
-        function extrairConteudo() {
+        function extrairLinks() {
             // Acessa o conteúdo do iframe
             const iframe = document.getElementById('iframe');
             const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
 
-            // Obtém o conteúdo do iframe
-            const conteudoExtraido = iframeDocument.body.innerHTML;
+            // Obtém todos os links presentes na página carregada no iframe
+            const links = iframeDocument.querySelectorAll('a');
 
-            // Exibe o conteúdo extraído na caixa de texto
-            document.getElementById('conteudo').value = conteudoExtraido;
+            // Exibe os links extraídos na lista
+            const listaLinks = document.getElementById('lista-links');
+            listaLinks.innerHTML = '';
+
+            links.forEach(link => {
+                const li = document.createElement('li');
+                li.textContent = link.href;
+                listaLinks.appendChild(li);
+            });
         }
     </script>
 </body>
