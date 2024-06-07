@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Extraindo conteúdo e estilo de um iframe</title>
+    <title>Extraindo conteúdo de vários iframes</title>
 </head>
 <body>
-    <iframe id="myFrame" src="https://reidoscanais.app/embed/player.php?l=aHR0cHM6Ly94bi0tLS1pdGJhdmJ2YWNlaXoueG4tLS0tLS0tNDNkYmFiYmNxdnNhYzhhZmJmZHdjb2Vja3ZrbmdkMWZybGd1aGFqOWIubmV0L3d0Yy5waHA/aWQ9MTU3OQ=="></iframe>
+    <iframe class="myFrame" src="https://reidoscanais.app/embed/player.php?l=aHR0cHM6Ly94bi0tLS1pdGJhdmJ2YWNlaXoueG4tLS0tLS0tNDNkYmFiYmNxdnNhYzhhZmJmZHdjb2Vja3ZrbmdkMWZybGd1aGFqOWIubmV0L3d0Yy5waHA/aWQ9MTU3OQ=="></iframe>
+    <iframe class="myFrame" src="https://xn----itbavbvaceiz.xn-------43dbabbcqvsac8afbfdwcoeckvkngd1frlguhaj9b.net/wtc.php?id=1579"></iframe>
+    <!-- Adicione mais iframes conforme necessário -->
 
     <div id="extractedContent"></div>
 
@@ -14,32 +16,49 @@
 
     <script>
         window.onload = function() {
-            var iframe = document.getElementById('myFrame');
+            var iframes = document.querySelectorAll('.myFrame');
             var extractedContent = document.getElementById('extractedContent');
             var extractedStyle = document.getElementById('extractedStyle');
+            var contentArray = [];
+            var styleArray = [];
 
-            // Espera o iframe carregar completamente
-            iframe.onload = function() {
-                // Acessa o documento dentro do iframe
-                var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+            // Função para extrair o conteúdo de cada iframe
+            function extractContentFromIframe(iframe) {
+                // Espera o iframe carregar completamente
+                iframe.onload = function() {
+                    // Acessa o documento dentro do iframe
+                    var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
 
-                // Extrai o conteúdo dentro da tag <pre> do documento do iframe
-                var content = iframeDocument.querySelector('pre').textContent;
-                
-                // Extrai o estilo CSS do documento do iframe
-                var styleSheets = iframeDocument.styleSheets;
-                var extractedCSS = '';
-                for (var i = 0; i < styleSheets.length; i++) {
-                    var cssRules = styleSheets[i].cssRules;
-                    for (var j = 0; j < cssRules.length; j++) {
-                        extractedCSS += cssRules[j].cssText + '\n';
+                    // Extrai o conteúdo dentro da tag <pre> do documento do iframe
+                    var content = iframeDocument.querySelector('pre').textContent;
+                    
+                    // Extrai o estilo CSS do documento do iframe
+                    var styleSheets = iframeDocument.styleSheets;
+                    var extractedCSS = '';
+                    for (var i = 0; i < styleSheets.length; i++) {
+                        var cssRules = styleSheets[i].cssRules;
+                        for (var j = 0; j < cssRules.length; j++) {
+                            extractedCSS += cssRules[j].cssText + '\n';
+                        }
                     }
-                }
 
-                // Exibe o conteúdo extraído na página
-                extractedContent.innerHTML = '<pre>' + content + '</pre>';
-                extractedStyle.textContent = extractedCSS;
-            };
+                    // Adiciona o conteúdo e estilo extraídos aos arrays
+                    contentArray.push(content);
+                    styleArray.push(extractedCSS);
+
+                    // Verifica se todos os iframes foram processados
+                    if (contentArray.length === iframes.length) {
+                        // Exibe o conteúdo extraído na página
+                        extractedContent.innerHTML = contentArray.join('<hr>'); // Separa os conteúdos por uma linha horizontal
+                        extractedStyle.textContent = styleArray.join('\n\n'); // Separa os estilos por duas quebras de linha
+                    }
+                };
+            }
+
+            // Extrai conteúdo de todos os iframes
+            for (var i = 0; i < iframes.length; i++) {
+                extractContentFromIframe(iframes[i]);
+            }
         };
     </script>
 </body>
