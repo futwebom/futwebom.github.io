@@ -1,1 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+    <style>
+        /* Custom CSS */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        nav.navbar {
+            background-color: #343a40;
+        }
+
+        .navbar-brand img {
+            width: 40px;
+            height: auto;
+        }
+
+        .navbar-nav .nav-link {
+            color: #ffffff !important;
+            font-weight: bold;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #f39c12 !important;
+        }
+
+        #player-container {
+            margin-top: 20px;
+        }
+
+        #player iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+        }
+
+        .search-channel {
+            margin-bottom: 20px;
+        }
+
+        .search-channel input {
+            font-size: 16px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+        }
+
+        .list-channels {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .channel {
+            width: 200px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .channel img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .channel .name {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .channel:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .channel img {
+            border-radius: 8px;
+        }
+
+        /* Custom alert */
+        #alert {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="/">
+            <img src="/imgs/iconpage.png" alt="Logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href=" PAGINA NAVBAR ">PRINCIPAL</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+    <section id="player-container" class="container">
+        <div class="row justify-content-center">
+            <div id="player" class="col-lg-8 col-md-12 p-0">
+                <iframe id="videoPlayer" src=" LINK DO VIDEO INICIO " name="Player" allow="encrypted-media" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-4">
+            <div class="col-lg-8 col-md-12 p-0">
+                <section class="search-channel">
+                    <input type="text" class="form-control" id="searchInput" placeholder="Pesquise o Canal...">
+                </section>
+                <section class="list-channels" id="channelList">
+                    
+                </section>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch("channels.json")
+                .then(response => response.json())
+                .then(channels => {
+                    const channelList = document.getElementById("channelList");
+
+                    channels.forEach(channel => {
+                        const channelElement = document.createElement("div");
+                        channelElement.className = "channel";
+                        channelElement.dataset.url = channel.url;
+                        channelElement.innerHTML = `
+                            <img src="${channel.image}" alt="${channel.name}">
+                            <div class="name">${channel.name}</div>
+                        `;
+                        channelList.appendChild(channelElement);
+                    });
+
+                    document.querySelectorAll(".channel").forEach(function (channelElement) {
+                        channelElement.addEventListener("click", function () {
+                            const videoUrl = this.getAttribute("data-url");
+                            document.getElementById("videoPlayer").setAttribute("src", videoUrl);
+                        });
+                    });
+
+                    document.getElementById("searchInput").addEventListener("input", function () {
+                        const searchQuery = this.value.toUpperCase();
+                        document.querySelectorAll(".channel").forEach(function (channelElement) {
+                            const channelName = channelElement.querySelector(".name").textContent.toUpperCase();
+                            channelElement.style.display = channelName.includes(searchQuery) ? "flex" : "none";
+                        });
+                    });
+                })
+                .catch(error => console.error("Error loading channels:", error));
+        });
+    </script>
+
+</body>
+</html>
